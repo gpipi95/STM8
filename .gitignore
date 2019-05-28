@@ -1,0 +1,7 @@
+/testProj/Debug/*.ls
+/testProj/Debug/*.o
+/testProj/Debug/*.lkf
+/testProj/Debug/*.map
+/testProj/Debug/*.sm8
+/testProj/Release
+/testProj/Debug
