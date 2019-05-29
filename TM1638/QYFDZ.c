@@ -9,6 +9,7 @@ void          LedDisplay(unsigned char data0, unsigned char data1, unsigned char
 int main(void)
 {
     unsigned char key_value;
+    init_TM1638();
     LedDisplay(1, 3, 7, 0, 2, 1, 0, 2);
     delay_ms(1000);
 
