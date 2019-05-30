@@ -217,7 +217,7 @@ String.6.0=2019,5,28,20,55,13
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
-Child=Root.Source Files...\tm1638\tm1638.c
+Child=Root.Source Files...\tm1638\qyfdz.c
 Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
@@ -288,14 +288,14 @@ String.4.0=
 String.5.0=
 String.6.0=2019,5,28,20,55,13
 
+[Root.Source Files...\tm1638\qyfdz.c]
+ElemType=File
+PathName=..\tm1638\qyfdz.c
+Next=Root.Source Files...\tm1638\tm1638.c
+
 [Root.Source Files...\tm1638\tm1638.c]
 ElemType=File
 PathName=..\tm1638\tm1638.c
-Next=Root.Source Files.main.c
-
-[Root.Source Files.main.c]
-ElemType=File
-PathName=main.c
 Next=Root.Source Files.stm8_interrupt_vector.c
 
 [Root.Source Files.stm8_interrupt_vector.c]

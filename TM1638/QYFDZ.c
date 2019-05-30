@@ -1,8 +1,7 @@
 #include "../core/delay.h"
 #include "TM1638.h"
 
-unsigned char DisBuffer[8] = { 0, 0, 0, 0, 0, 0, 0, 0 }; /*显示缓存区*/ //各个数码管显示的值
-unsigned char tab[]        = { 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71, 0x40, 0xef };
+unsigned char tab[] = { 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71, 0x40, 0xef };
 void          LedDisplay(unsigned char data0, unsigned char data1, unsigned char data2, unsigned char data3,
                          unsigned char data4, unsigned char data5, unsigned char data6, unsigned char data7);
 
@@ -10,7 +9,7 @@ int main(void)
 {
     unsigned char key_value;
     init_TM1638();
-    LedDisplay(1, 3, 7, 0, 2, 1, 0, 2);
+    LedDisplay(1, 2, 3, 4, 5, 6, 7, 8);
     delay_ms(1000);
 
     while (1) {
@@ -109,13 +108,18 @@ void LedDisplay(unsigned char ddata0, unsigned char ddata1, unsigned char ddata2
     writedata7 = ((tab[data0] & 0x80) >> 7) + ((tab[data1] & 0x80) >> 6) + ((tab[data2] & 0x80) >> 5) + ((tab[data3] & 0x80) >> 4) + ((tab[data4] & 0x80) >> 3)
                  + ((tab[data5] & 0x80) >> 2) + ((tab[data6] & 0x80) >> 1) + ((tab[data7] & 0x80));
 
-    Write_COM(0x8a); //亮度
-    Write_COM(0x40); //写数据命令
     STB_Clear();
-    TM1638_Write(0xc0); //写地址命令
-
+    Write_COM(0x88); //亮度
+    STB_Set();
+    delay_ms(5);
+    STB_Clear();
+    Write_COM(0x40); //写数据命令
+    STB_Set();
+    delay_ms(5);
+    STB_Clear();
+    TM1638_Write(0x00); //写地址命令
     TM1638_Write(writedata0);
-    TM1638_Write(0x80);
+    TM1638_Write(0x00);
     TM1638_Write(writedata1);
     TM1638_Write(0x00);
     TM1638_Write(writedata2);

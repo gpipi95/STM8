@@ -19,7 +19,7 @@ unsigned char TM1638_Read(void) //读数据函数
 {
     unsigned char i;
     unsigned char temp = 0;
-    DIO_Set(); //设置为输入
+    DIO_Input_Mode(); // set to input mode
     for (i = 0; i < 8; i++) {
         temp >>= 1;
         CLK_Clear();
@@ -28,6 +28,7 @@ unsigned char TM1638_Read(void) //读数据函数
         }
         CLK_Set();
     }
+    DIO_Output_Mode(); // set to output mode
     return temp;
 }
 void Write_COM(unsigned char cmd) //发送命令字
@@ -42,7 +43,7 @@ unsigned char Read_key(void)
     unsigned char c[4], i, key_value = 0;
     STB_Clear();
     TM1638_Write(0x42);
-    delay_ms(100);
+    delay_ms(10);
     for (i = 0; i < 4; i++) {
         c[i] = TM1638_Read();
     }
@@ -101,11 +102,19 @@ unsigned char Read_key(void)
 void init_TM1638(void)
 {
     unsigned char i;
-    Write_COM(0x8a); //亮度
-    Write_COM(0x8a); //亮度
-    Write_COM(0x40); //写数据命令
+    PA_DDR = 0x0F; // PA1-4 set to output
+    PA_CR1 = 0x0F; // push-pull
+    PA_CR2 = 0x00;
     STB_Clear();
-    TM1638_Write(0xc0); //写地址命令
+    Write_COM(0x88); // brigthness
+    STB_Set();
+    delay_ms(5);
+    STB_Clear();
+    Write_COM(0x40); // write with address auto increase mode
+    STB_Set();
+    delay_ms(5);
+    STB_Clear();
+    TM1638_Write(0x00); // set starting address
     for (i = 0; i < 16; i++) {
         TM1638_Write(0xff);
     }

@@ -46,13 +46,16 @@
 
 //引脚定义, 51chip set
 // todo: change the following register settings
-#define DIO_Set() _asm("bset 0x5000, #1")   //  PA1
-#define DIO_Clear() _asm("bres 0x5000, #1") //  PA1
-#define CLK_Set() _asm("bset 0x5000, #2")   //  PA2
-#define CLK_Clear() _asm("bres 0x5000, #2") //  PA2
-#define STB_Set() _asm("bset 0x5000, #3")   //  PA3
-#define STB_Clear() _asm("bres 0x5000, #3") //  PA3
-#define DIO_Status() PD_ODR & 0x08
+#define DIO_Set() _asm("bset 0x5000, #1")                                             //  PA1
+#define DIO_Clear() _asm("bres 0x5000, #1")                                           //  PA1
+#define CLK_Set() _asm("bset 0x5000, #2")                                             //  PA2
+#define CLK_Clear() _asm("bres 0x5000, #2")                                           //  PA2
+#define STB_Set() _asm("bset 0x5000, #3")                                             //  PA3
+#define STB_Clear() _asm("bres 0x5000, #3")                                           //  PA3
+#define DIO_Input_Mode() _asm("bres 0x5002, #1\n bset 0x5003, #1\n bres 0x5004, #1")  // Set DIO to input without interrupt of pull up mode
+#define DIO_Output_Mode() _asm("bset 0x5002, #1\n bset 0x5003, #1\n bres 0x5004, #1") // Set DIO to output without interrupt of pull up mode
+
+static @ inline unsigned char DIO_Status(void) { return (PA_IDR & 0x02); }
 
 void          TM1638_Write(unsigned char DATA); //写数据函数
 unsigned char TM1638_Read(void);
