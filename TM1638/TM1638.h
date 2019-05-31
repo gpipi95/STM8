@@ -2,13 +2,13 @@
 #define _TM1638_H
 #include "../core/STM8S103K3T6C.h"
 
-#define segA 0x40
-#define segB 0x20
-#define segC 0x10
+#define segG 0x40
+#define segF 0x20
+#define segE 0x10
 #define segD 0x08
-#define segE 0x04
-#define segF 0x02
-#define segG 0x01
+#define segC 0x04
+#define segB 0x02
+#define segA 0x01
 #define segDP 0x80
 
 #define ndp0 (segA + segB + segC + segD + segE + segF)
@@ -57,11 +57,17 @@
 
 static @ inline unsigned char DIO_Status(void) { return (PA_IDR & 0x02); }
 
-void          TM1638_Write(unsigned char DATA); //Ð´Êý¾Ýº¯Êý
-unsigned char TM1638_Read(void);
-unsigned char Read_key(void);
-void          Write_COM(unsigned char cmd);
-void          Write_DATA(unsigned char add, unsigned char DATA);
-void          init_TM1638(void);
+void TM1638WriteByte(unsigned char data); /* write DIO */
+void TM1638ReadByte(unsigned char* data); /* read DIO */
+// if no valid key return value is 0xFF
+void TM1638Readkey(unsigned char* keyValue); /* read key values, 0xFF stands for invalid key */
+void TM1638SendCommand(unsigned char cmd);   /* write command to tm1638 with STB change*/
+void TM1638Init(void);
+// ledName start from 0 to 7
+void TM1638OneSymbolDisplay(unsigned char ledName, unsigned char symbol); /* display one led */
+void TM1638EightSymbolDisplay(unsigned char* symbols);                    /* the content at the pointer must have 8 byte */
+// display symbol's value must be less than 32
+void TM1638ConvertDisplaySymbol(unsigned char pos, unsigned char symbol); /* convert symbol to display code */
+void TM1638RefreshDisplayBuffer(void);
 
 #endif
