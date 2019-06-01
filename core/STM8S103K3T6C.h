@@ -7,5 +7,6 @@
 #endif
 #endif
 #include "STM8S003K3.h"
+#define SFR(a) (unsigned char)(a)
 
 #endif

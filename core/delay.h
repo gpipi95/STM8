@@ -1,5 +1,5 @@
-#ifndef delay_H
-#define delay_H
+#ifndef _delay_H_
+#define _delay_H_
 
 /* 
  *  * Func delayed N cycles, where N = 3 + ( ticks * 3 )
@@ -10,7 +10,7 @@
 #define F_CPU 8000000 // cpu frequence is 8MHz
 static @ inline void delay_cycl(unsigned short ticks)
 {
-#define T_COUNT(x) (F_CPU * x / 1000000UL)*3  / 4
+#define T_COUNT(x) (F_CPU * x / 1000000UL) * 3 / 4
     // ldw X, __ticks ; insert automaticaly
     _asm("nop\n $N:\n decw X\n jrne $L\n nop\n ", ticks);
 }

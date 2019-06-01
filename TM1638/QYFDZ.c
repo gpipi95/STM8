@@ -7,7 +7,6 @@ int main(void)
     unsigned char displayData[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
     TM1638Init();
     TM1638EightSymbolDisplay(displayData);
-    delay_ms(1000);
     while (1) {
         TM1638Readkey(&keyValue);
         if (keyValue != 0xFF) {

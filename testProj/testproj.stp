@@ -74,7 +74,7 @@ String.6.0=2019,5,28,20,55,13
 String.100.0=$(TargetFName)
 String.101.0=
 String.102.0=
-String.103.0=.\;..\tm1638;
+String.103.0=.\;..\tm1638;..\ds18b20;..\core;
 
 [Root.Config.0.Settings.2]
 String.2.0=
@@ -83,7 +83,7 @@ String.100.0=STM8S103K3
 
 [Root.Config.0.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,21,47,13
@@ -155,7 +155,7 @@ Int.108=0
 String.6.0=2019,5,28,20,55,13
 String.100.0=$(TargetFName)
 String.101.0=
-String.103.0=.\;..\tm1638;
+String.103.0=.\;..\tm1638;..\ds18b20;..\core;
 
 [Root.Config.1.Settings.2]
 String.2.0=
@@ -164,7 +164,7 @@ String.100.0=STM8S103K3
 
 [Root.Config.1.Settings.3]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,20,55,13
@@ -217,7 +217,7 @@ String.6.0=2019,5,28,20,55,13
 [Root.Source Files]
 ElemType=Folder
 PathName=Source Files
-Child=Root.Source Files...\tm1638\qyfdz.c
+Child=Root.Source Files...\tm1638\tm1638.c
 Next=Root.Include Files
 Config.0=Root.Source Files.Config.0
 Config.1=Root.Source Files.Config.1
@@ -242,7 +242,7 @@ Int.1=0
 
 [Root.Source Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,21,47,13
@@ -269,7 +269,7 @@ Int.1=0
 
 [Root.Source Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,20,55,13
@@ -288,14 +288,14 @@ String.4.0=
 String.5.0=
 String.6.0=2019,5,28,20,55,13
 
-[Root.Source Files...\tm1638\qyfdz.c]
-ElemType=File
-PathName=..\tm1638\qyfdz.c
-Next=Root.Source Files...\tm1638\tm1638.c
-
 [Root.Source Files...\tm1638\tm1638.c]
 ElemType=File
 PathName=..\tm1638\tm1638.c
+Next=Root.Source Files.main.c
+
+[Root.Source Files.main.c]
+ElemType=File
+PathName=main.c
 Next=Root.Source Files.stm8_interrupt_vector.c
 
 [Root.Source Files.stm8_interrupt_vector.c]
@@ -305,6 +305,7 @@ PathName=stm8_interrupt_vector.c
 [Root.Include Files]
 ElemType=Folder
 PathName=Include Files
+Child=Root.Include Files...\core\delay.h
 Config.0=Root.Include Files.Config.0
 Config.1=Root.Include Files.Config.1
 
@@ -328,7 +329,7 @@ Int.1=0
 
 [Root.Include Files.Config.0.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customDebCompat -customOpt-no -customC-pp -customLst -l -i"c:\program files (x86)\cosmic\cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core _eval\hstm8" -i"c:\program files (x86)\stmicroelectronics\st_toolset\include" $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile)
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,21,47,13
@@ -355,7 +356,7 @@ Int.1=0
 
 [Root.Include Files.Config.1.Settings.1]
 String.2.0=Compiling $(InputFile)...
-String.3.0=cxstm8 -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
+String.3.0=cxstm8 -i..\tm1638  -i..\ds18b20  -i..\core  +mods0 -customC-pp $(ToolsetIncOpts) -cl$(IntermPath) -co$(IntermPath) $(InputFile) 
 String.4.0=$(IntermPath)$(InputName).$(ObjectExt)
 String.5.0=$(IntermPath)$(InputName).ls
 String.6.0=2019,5,28,20,55,13
@@ -373,3 +374,22 @@ String.3.0=
 String.4.0=
 String.5.0=
 String.6.0=2019,5,28,20,55,13
+
+[Root.Include Files...\core\delay.h]
+ElemType=File
+PathName=..\core\delay.h
+Next=Root.Include Files...\core\stm8s103k3t6c.h
+
+[Root.Include Files...\core\stm8s103k3t6c.h]
+ElemType=File
+PathName=..\core\stm8s103k3t6c.h
+Next=Root.Include Files...\ds18b20\atomic.h
+
+[Root.Include Files...\ds18b20\atomic.h]
+ElemType=File
+PathName=..\ds18b20\atomic.h
+Next=Root.Include Files...\tm1638\tm1638.h
+
+[Root.Include Files...\tm1638\tm1638.h]
+ElemType=File
+PathName=..\tm1638\tm1638.h

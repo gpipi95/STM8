@@ -1,5 +1,70 @@
 #include "TM1638.h"
 #include "../core/delay.h"
+
+#define segG 0x40
+#define segF 0x20
+#define segE 0x10
+#define segD 0x08
+#define segC 0x04
+#define segB 0x02
+#define segA 0x01
+#define segDP 0x80
+
+#define ndp0 (segA + segB + segC + segD + segE + segF)
+#define ndp1 (segB + segC)
+#define ndp2 (segA + segB + segG + segE + segD)
+#define ndp3 (segA + segB + segG + segC + segD)
+#define ndp4 (segF + segG + segB + segC)
+#define ndp5 (segA + segF + segG + segC + segD)
+#define ndp6 (segA + segF + segG + segC + segD + segE)
+#define ndp7 (segA + segB + segC)
+#define ndp8 (segA + segB + segC + segD + segE + segF + segG)
+#define ndp9 (segA + segB + segC + segD + segF + segG)
+#define ndpA (segA + segB + segC + segE + segF + segG)
+#define ndpB (segC + segD + segE + segF + segG)
+#define ndpC (segA + segD + segE + segF)
+#define ndpD (segB + segC + segD + segE + segG)
+#define ndpE (segA + segD + segE + segF + segG)
+#define ndpF (segA + segE + segF + segG)
+#define wdp0 (ndp0 + segDP)
+#define wdp1 (ndp1 + segDP)
+#define wdp2 (ndp2 + segDP)
+#define wdp3 (ndp3 + segDP)
+#define wdp4 (ndp4 + segDP)
+#define wdp5 (ndp5 + segDP)
+#define wdp6 (ndp6 + segDP)
+#define wdp7 (ndp7 + segDP)
+#define wdp8 (ndp8 + segDP)
+#define wdp9 (ndp9 + segDP)
+#define wdpA (ndpA + segDP)
+#define wdpB (ndpB + segDP)
+#define wdpC (ndpC + segDP)
+#define wdpD (ndpD + segDP)
+#define wdpE (ndpE + segDP)
+#define wdpF (ndpF + segDP)
+
+#define DIO_Set() SET_BIT8(TM1638_PORT_ODR, DIO_PIN)     //  PA1
+#define DIO_Clear() CLEAR_BIT8(TM1638_PORT_ODR, DIO_PIN) //  PA1
+#define CLK_Set() SET_BIT8(TM1638_PORT_ODR, CLK_PIN)     //  PA2
+#define CLK_Clear() CLEAR_BIT8(TM1638_PORT_ODR, CLK_PIN) //  PA2
+#define STB_Set() SET_BIT8(TM1638_PORT_ODR, STB_PIN)     //  PA3
+#define STB_Clear() CLEAR_BIT8(TM1638_PORT_ODR, STB_PIN) //  PA3
+
+#define DIO_Input_Mode() CLEAR_BIT8(TM1638_PORT_DDR, DIO_PIN)  // Set DIO to input
+#define DIO_Output_Mode() SET_BIT8(TM1638_PORT_DDR, DIO_PIN)   // Set DIO to output
+#define DIO_Status() TM1638_PORT_IDR& CAST_UC(0x01 << DIO_PIN) // read DIO bit
+
+#define DISPLAY_CONTROL_COMMAND 0x8A
+#define AUTO_INCREASE_COMMAND 0x40
+#define DISPLAY_START_ADDRESS 0xC0
+#define READ_KEY_COMMAND 0x42
+
+void TM1638WriteByte(unsigned char data);  /* write DIO */
+void TM1638ReadByte(unsigned char* data);  /* read DIO */
+void TM1638SendCommand(unsigned char cmd); /* write command to tm1638 with STB change*/
+void TM1638RefreshDisplayBuffer(void);
+// display symbol's value must be less than 32
+void TM1638ConvertDisplaySymbol(unsigned char pos, unsigned char symbol); /* convert symbol to display code */
 // use map to find the keyName of keyboard
 const static unsigned char TM1638KeyMap[4][4] = {
     // 0x02 0x04 0x20 0x40
@@ -72,7 +137,7 @@ void TM1638Readkey(unsigned char* keyValue)
         hasKey         = 0;
 
         STB_Clear();
-        TM1638WriteByte(0x42);
+        TM1638WriteByte(READ_KEY_COMMAND);
         delay_us(100);
         for (i = 0; i < 4; i++) {
             TM1638ReadByte(c + i);
@@ -114,9 +179,18 @@ void TM1638Init(void)
     // init displ data
     unsigned char displayData[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
     // init IO state
-    PA_DDR = 0x0F; // PA1-4 set to output
-    PA_CR1 = 0x0F; // push-pull
-    PA_CR2 = 0x00;
+    SET_BIT8(TM1638_PORT_DDR, DIO_PIN); // PA1-4 set to output
+    SET_BIT8(TM1638_PORT_DDR, CLK_PIN); // PA1-4 set to output
+    SET_BIT8(TM1638_PORT_DDR, STB_PIN); // PA1-4 set to output
+
+    SET_BIT8(TM1638_PORT_CR1, DIO_PIN); //  push-pull/pull up
+    SET_BIT8(TM1638_PORT_CR1, CLK_PIN); //  push-pull/pull up
+    SET_BIT8(TM1638_PORT_CR1, STB_PIN); //  push-pull/pull up
+
+    CLEAR_BIT8(TM1638_PORT_CR2, DIO_PIN); //  push-pull/pull up
+    CLEAR_BIT8(TM1638_PORT_CR2, CLK_PIN); //  push-pull/pull up
+    CLEAR_BIT8(TM1638_PORT_CR2, STB_PIN); //  push-pull/pull up
+
     TM1638EightSymbolDisplay(displayData);
 }
 
@@ -153,10 +227,10 @@ void TM1638EightSymbolDisplay(unsigned char* symbols)
 void TM1638RefreshDisplayBuffer(void)
 {
     unsigned char i;
-    TM1638SendCommand(0x8A);
-    TM1638SendCommand(0x40);
+    TM1638SendCommand(DISPLAY_CONTROL_COMMAND);
+    TM1638SendCommand(AUTO_INCREASE_COMMAND);
     STB_Clear();
-    TM1638WriteByte(0xC0);
+    TM1638WriteByte(DISPLAY_START_ADDRESS);
     for (i = 0; i < 8; ++i) {
         TM1638WriteByte(TM1638DisplayBuffer[i]);
         TM1638WriteByte(0x00);
