@@ -66,7 +66,7 @@ void TM1638RefreshDisplayBuffer(void);
 // display symbol's value must be less than 32
 void TM1638ConvertDisplaySymbol(unsigned char pos, unsigned char symbol); /* convert symbol to display code */
 // use map to find the keyName of keyboard
-const static unsigned char TM1638KeyMap[4][4] = {
+const unsigned char TM1638KeyMap[4][4] = {
     // 0x02 0x04 0x20 0x40
     { 9, 1, 10, 2 },  // 0 TM1638 key Byte 1
     { 11, 3, 12, 4 }, // 1 TM1638 key Byte 2
@@ -74,7 +74,7 @@ const static unsigned char TM1638KeyMap[4][4] = {
     { 15, 7, 16, 8 }  // 3 TM1638 key Byte 4
 };
 // digit to display code table
-const static unsigned char TM1638DigitToDisplayCodeMap[32] = {
+const unsigned char TM1638DigitToDisplayCodeMap[32] = {
     // clang-format off
     ndp0, ndp1, ndp2, ndp3, ndp4, ndp5, ndp6, ndp7,
     ndp8, ndp9, ndpA, ndpB, ndpC, ndpD, ndpE, ndpF,
@@ -85,7 +85,7 @@ const static unsigned char TM1638DigitToDisplayCodeMap[32] = {
 // display buffer
 // bit0 to bit7
 // segA to segDP
-static unsigned char TM1638DisplayBuffer[8] = { segDP, segG, segF, segE, segD, segC, segB, segA };
+unsigned char TM1638DisplayBuffer[8] = { segDP, segG, segF, segE, segD, segC, segB, segA };
 //static unsigned char TM1638DisplayBuffer[8] = { segA, segB, segC, segD, segE, segF, segG, segDP };
 
 void TM1638WriteByte(unsigned char data)

@@ -1,14 +1,16 @@
 #include "owire.h"
+#include "../core/atomic.h"
+#include "../core/delay.h"
 
 /* --- used APPLICATION NOTE 126 ---
    --- Maxim's for time delays.  --- 
    http://www.maximintegrated.com/en/app-notes/index.mvp/id/126
    --- */
 
-unsigned char iStateSave;
+unsigned char iStateSave; /* interrupt state */
 
 /* do CRC8 table */
-const unsigned char W1_crc8_table[] = {
+const unsigned char W1_CRC8_TABLE[] = {
     // clang-format off
     0,   94,  188, 226, 97,  63,  221, 131, 194, 156, 126, 32,  163, 253, 31,  65,  // 0
     157, 195, 33,  127, 252, 162, 64,  30,  95,  1,   227, 189, 62,  96,  130, 220, // 16
@@ -33,11 +35,11 @@ unsigned char W1ReadBit(void)
 {
     unsigned char out;
     _asm("nop");
-    W1_BUS_OUTPUT(); // low
+    W1_BUS_OUT_0(); // low
     delay_us(A);
-    //W1_PORT->ODR |= 1 << W1_PIN;
+    W1_BUS_OUT_1(); // high
     delay_us(E);
-    out = SFR((PF_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    out = CAST_UC((PF_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
     delay_us(F);
     return (out);
 }
@@ -46,51 +48,45 @@ unsigned char W1WriteBit(unsigned char bit)
 {
     if (bit != 0) {
         // Write '1' bit
-        W1_PORT->ODR &= SFR(~(1 << W1_PIN)); // Drives DQ low
-                                             //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
+        W1_BUS_OUT_0(); // Drives DQ low
+                        //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
         delay_us(A);
-        W1_PORT->ODR |= 1 << W1_PIN; // Releases the bus
-        delay_us(B);                 // Complete the time slot and 10us recovery
+        W1_BUS_OUT_1(); // Releases the bus
+        delay_us(B);    // Complete the time slot and 10us recovery
     } else {
         // Write '0' bit
-        W1_PORT->ODR &= SFR(~(1 << W1_PIN)); // Drives DQ low
-                                             //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
+        W1_BUS_OUT_0(); // Drives DQ low
+                        //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
         delay_us(C);
-        W1_PORT->ODR |= 1 << W1_PIN; // Releases the bus
+        W1_BUS_OUT_1(); // Releases the bus
         delay_us(D);
     }
     return (1); // compatability CodeVision
 }
 
-unsigned char w1_init(void)
+unsigned char W1Init(void)
 {
-    unsigned char out;
+    unsigned char presence;
 
 #if INTDE
     iStateSave = ATOMIC_BEGIN();
 #endif
     /* Init IO and reset presence pulse */
     // select Open drain output, fast mode
-    W1_PORT->DDR |= SFR(1 << W1_PIN);
-    //	W1_PORT->CR1 |= SFR(1<<W1_PIN);
-    W1_PORT->CR1 &= SFR(~(1 << W1_PIN));
-    W1_PORT->CR2 |= SFR(1 << W1_PIN);
-
-    W1_PORT->ODR &= SFR(~(1 << W1_PIN));
-    delay_us(H);
-
-    W1_PORT->ODR |= 1 << W1_PIN;
-    delay_us(I);
-    //	out = bit_is_clean( (W1_PORT->IDR), W1_PIN) ? 0x01 : 0x00 ;
-    out = (unsigned char)(!(W1_PORT->IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    W1_BUS_OUTPUT();
+    W1_BUS_OUT_0();
+    delay_us(W1_RESET_TIME_HIGH);
+    W1_BUS_OUT_1();
+    delay_us(W1_PRESENCE_DETECT_LOW);
+    presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
     delay_us(J);
 #if INTDE
     ATOMIC_END(iStateSave);
 #endif
-    return out;
+    return presence;
 }
 
-unsigned char w1_read(void)
+unsigned char W1Read(void)
 {
     // 1-wire read byte
     unsigned char out = 0x00;
@@ -99,10 +95,10 @@ unsigned char w1_read(void)
 #if INTDE
     iStateSave = ATOMIC_BEGIN();
 #endif
-    delay_us(60);
+    delay_us(C);
     for (j = 0; j < 8; j++) {
         out >>= 1;
-        out |= SFR(W1_rxBit() ? 0x80 : 0);
+        out |= CAST_UC(W1ReadBit() ? 0x80 : 0);
     }
 #if INTDE
     ATOMIC_END(iStateSave);
@@ -110,7 +106,7 @@ unsigned char w1_read(void)
     return (out);
 }
 
-unsigned char w1_write(unsigned char data)
+unsigned char W1Write(unsigned char data)
 {
     // 1-Wire write byte
     unsigned char i;
@@ -120,9 +116,9 @@ unsigned char w1_write(unsigned char data)
 #endif
     for (i = 0; i < 8; i++) {
         if ((data & (0x01 << i)) != 0) {
-            W1_txBit(1);
+            W1WriteBit(1);
         } else {
-            W1_txBit(0);
+            W1WriteBit(0);
         }
         //		_asm("nop");
     }
@@ -138,9 +134,9 @@ void storeBit(unsigned char bitIdx, unsigned char bitVal, unsigned char* p)
     unsigned char ch;
     ch = *(p + (bitIdx >> 3)); // byte address
     if (bitVal) {
-        ch |= SFR(1 << (bitIdx & 0x07));
+        ch |= CAST_UC(1 << (bitIdx & 0x07));
     } else {
-        ch &= SFR(~(1 << (bitIdx & 0x07)));
+        ch &= CAST_UC(~(1 << (bitIdx & 0x07)));
     }
     *(p + (bitIdx >> 3)) = ch; // save actual byte
 }
@@ -193,8 +189,8 @@ w1_error_t w1_search(unsigned char cmd, unsigned char* p)
                 bit_to_write = 1;
             } else if (id_bit_num > lastConflict) {
                 bit_to_write = 0;
-            } else {                                                                                      // #13
-                bit_to_write = SFR((*(p + ((id_bit_num - 1) >> 3)) >> ((id_bit_num - 1) & 0x07)) & 0x01); // get bit ROM[idx]
+            } else {                                                                                          // #13
+                bit_to_write = CAST_UC((*(p + ((id_bit_num - 1) >> 3)) >> ((id_bit_num - 1) & 0x07)) & 0x01); // get bit ROM[idx]
             }
             if (!bit_to_write) { // bit_to_write==0 #15
                 lastZero = id_bit_num;
@@ -205,7 +201,7 @@ w1_error_t w1_search(unsigned char cmd, unsigned char* p)
         }
 
         // write, send
-        storeBit(SFR(id_bit_num - 1), bit_to_write, (unsigned char*)p);
+        storeBit(CAST_UC(id_bit_num - 1), bit_to_write, (unsigned char*)p);
 #if INTDE
         iStateSave = ATOMIC_BEGIN();
 #endif

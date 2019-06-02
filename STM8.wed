@@ -328,12 +328,13 @@ ResourceID=0
 
 [WorkState_v1_2.DockState.Bar-8]
 BarID=59647
+XPos=0
 MRUWidth=309
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=-1
+MRUDockLeftPos=0
 MRUDockTopPos=-1
-MRUDockRightPos=1439
+MRUDockRightPos=1440
 MRUDockBottomPos=30
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -383,7 +384,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=184352
+PctWidth=333333
 MRUFloatCX=0
 MRUFloatCY=0
 MRUHorzDockCX=148
@@ -404,14 +405,14 @@ Buttons=AABOAAAAAAGPDBAAAAAAAIIBAAAAAAAAAAAAAAAADABOAAAAAAAAAAAAAAAAHABOAAAAAA
 
 [WorkState_v1_2.DockState.Bar-10]
 BarID=59396
-XPos=165
+XPos=147
 YPos=30
 MRUWidth=566
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=165
+MRUDockLeftPos=147
 MRUDockTopPos=31
-MRUDockRightPos=748
+MRUDockRightPos=730
 MRUDockBottomPos=61
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -423,7 +424,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=631295
+PctWidth=333333
 MRUFloatCX=580
 MRUFloatCY=30
 MRUHorzDockCX=583
@@ -483,14 +484,14 @@ Buttons=IFGBAAAAAAJFGBAAAAAAAAAAAAAAAAFEGBAAAAAAIEGBAAAAAAEEGBAAAAAAMEGBAAAAAAAA
 
 [WorkState_v1_2.DockState.Bar-12]
 BarID=59398
-XPos=452
+XPos=401
 YPos=60
 MRUWidth=339
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=452
+MRUDockLeftPos=401
 MRUDockTopPos=60
-MRUDockRightPos=808
+MRUDockRightPos=757
 MRUDockBottomPos=90
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -502,7 +503,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=127407
+PctWidth=333333
 MRUFloatCX=356
 MRUFloatCY=30
 MRUHorzDockCX=356
@@ -523,7 +524,6 @@ Buttons=KAAIAAAACAEGAAMAAIAAAACAEGAAAAAAAAAAAABBAIAAAAAACBAIAAAAAADBAIAAAAAAAAAA
 
 [WorkState_v1_2.DockState.Bar-13]
 BarID=59399
-XPos=0
 YPos=60
 MRUWidth=385
 Docking=True
@@ -542,7 +542,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=714187
+PctWidth=333333
 MRUFloatCX=402
 MRUFloatCY=30
 MRUHorzDockCX=402
@@ -563,14 +563,14 @@ Buttons=HKAIAAAAAAIKAIAAAAAAAAAAAAAAAAADKBAAAAAAAAAAAAAAAAGPKBAAAAAAEPKBAAAAAAFP
 
 [WorkState_v1_2.DockState.Bar-14]
 BarID=59400
-XPos=822
+XPos=730
 YPos=30
 MRUWidth=23
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=822
+MRUDockLeftPos=730
 MRUDockTopPos=31
-MRUDockRightPos=862
+MRUDockRightPos=770
 MRUDockBottomPos=61
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -582,7 +582,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=184352
+PctWidth=333333
 MRUFloatCX=40
 MRUFloatCY=30
 MRUHorzDockCX=40
@@ -603,14 +603,14 @@ Buttons=JPAIAAAAAA
 
 [WorkState_v1_2.DockState.Bar-15]
 BarID=59401
-XPos=831
+XPos=757
 YPos=60
 MRUWidth=77
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=831
+MRUDockLeftPos=757
 MRUDockTopPos=60
-MRUDockRightPos=948
+MRUDockRightPos=874
 MRUDockBottomPos=90
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -622,7 +622,7 @@ MDIChild=False
 AutoHide=False
 AutoHidePinned=False
 LastAlignedDocking=0
-PctWidth=158405
+PctWidth=333333
 MRUFloatCX=94
 MRUFloatCY=30
 MRUHorzDockCX=117
@@ -1240,7 +1240,43 @@ ptn_Child1=MainFrame
 ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAAADIPPPPAADIPPPPPPPPPPPPPPPPPPPPHLAAAAAAEHAAAAAANKEAAAAADBDAAAAA
-Title=ST Visual Develop - STM8.stw
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPHLAAAAAAEHAAAAAANKEAAAAADBDAAAAA
+Title=ST Visual Develop - STM8.stw* - [owire.h]
 
 [WorkState_v1_2.Frames.ChildFrames]
+ptn_Child1=Document-0
+ptn_Child2=Document-1
+ptn_Child3=Document-2
+
+[WorkState_v1_2.Frames.ChildFrames.Document-0]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-0.ViewFrame-0]
+DocPathName=testproj\main.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPAAAAAAAAAAAAAAAAMODAAAAALGBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-1]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-1.ViewFrame-0]
+DocPathName=ds18b20\ds18b20.h
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAAKAEAAAAAJIBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-2.ViewFrame-0]
+DocPathName=ds18b20\owire.h
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPEDAAAAAAEDAAAAAAECEAAAAADKBAAAAA
+IsActiveChildFrame=True
+IsFrameVisible=True

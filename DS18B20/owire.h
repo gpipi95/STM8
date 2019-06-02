@@ -1,8 +1,7 @@
 #ifndef _OWIRE_H_
 #define _OWIRE_H_
 
-#include "../core/delay.h"
-#include "atomic.h"
+#include "../core/utility.h"
 
 // Save and restore interrupt state
 #define INTDE (1)
@@ -39,9 +38,22 @@ unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 #define W1_BUS_CR1 PF_CR1
 #define W1_BUS_CR2 PF_CR2
 #define W1_PIN 4
-#define W1_BUS_INPUT() _asm("bres W1_BUS_DDR, #W1_PIN\n")
-#define W1_BUS_OUTPUT() _asm("bset W1_BUS_DDR, #W1_PIN\n")
 
+// input without pull up
+#define W1_BUS_INPUT()              \
+    CLEAR_BIT8(W1_BUS_DDR, W1_PIN); \
+    CLEAR_BIT8(W1_BUS_CR1, W1_PIN); \
+    CLEAR_BIT8(W1_BUS_CR2, W1_PIN)
+// open drain output
+#define W1_BUS_OUTPUT()             \
+    SET_BIT8(W1_BUS_DDR, W1_PIN);   \
+    CLEAR_BIT8(W1_BUS_CR1, W1_PIN); \
+    CLEAR_BIT8(W1_BUS_CR2, W1_PIN)
+
+#define W1_BUS_OUT_1() SET_BIT8(W1_BUS_ODR, W1_PIN)
+#define W1_BUS_OUT_0() CLEAR_BIT8(W1_BUS_ODR, W1_PIN)
+
+#define W1_Read_pin()
 //Standard 1-Wire commands
 #define W1_READ_ROM 0x33
 #define W1_MATCH_ROM 0x55
@@ -61,14 +73,14 @@ unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 #define B (W1SLOT - A)
 #define C 60
 #define D (W1SLOT - C)
-//#define E   9
-#define E 7
+#define E 9
 #define F (W1SLOT - E - A)
 #define G 0
 #define H 480
 #define I 70
 #define J 410
 
-#define SFR(a) (unsigned char)(a)
+#define W1_RESET_TIME_HIGH 480
+#define W1_PRESENCE_DETECT_LOW 70
 
 #endif
