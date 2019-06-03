@@ -128,106 +128,14 @@ unsigned char W1Write(unsigned char data)
     return (1); // for compatibility CodeVision
 }
 
-void storeBit(unsigned char bitIdx, unsigned char bitVal, unsigned char* p)
-// write bitVal on bitIdx by *p
+unsigned char W1DowCRC8(unsigned char* p, unsigned char count)
 {
-    unsigned char ch;
-    ch = *(p + (bitIdx >> 3)); // byte address
-    if (bitVal) {
-        ch |= CAST_UC(1 << (bitIdx & 0x07));
-    } else {
-        ch &= CAST_UC(~(1 << (bitIdx & 0x07)));
-    }
-    *(p + (bitIdx >> 3)) = ch; // save actual byte
-}
-
-w1_error_t w1_search(unsigned char cmd, unsigned char* p)
-// rerun
-// using application note AN187
-// http://pdfserv.maximintegrated.com/en/an/AN187.pdf
-{
-    static unsigned char lastZero;
-    static unsigned char lastConflict = 0;
-    unsigned char        id_bit_num;
-    unsigned char        id_bit, id_cmp_bit;
-    unsigned char        bit_to_write;
-
-    if (!w1_init()) { // no devices // previous ID was the last
-        lastConflict = 0;
-        return (NODEV_PRESENT);
-    }
-    id_bit_num = 1;
-    lastZero   = 0;
-    w1_write(cmd); // search(cmd)
-
-    do {
-#if INTDE
-        iStateSave = ATOMIC_BEGIN();
-#endif
-        id_bit     = W1_rxBit();
-        id_cmp_bit = W1_rxBit();
-#if INTDE
-        ATOMIC_END(iStateSave);
-#endif
-        if ((id_bit != 0) && (id_cmp_bit != 0)) { // connection fault!
-            lastConflict = 0;
-            /*{
-				*p = 0x00;
-				*(p+1)=0x00;
-				*(p+2)=0x00;
-				*(p+3)=0x00;
-				*(p+4)=0x00;
-				*(p+5)=0x00;
-				*(p+6)=0x00;
-				*(p+7)=0x00;
-				storeBit( id_bit_num, 0x01, p);
-			}*/
-            return (CONN_FAULT);
-        }
-        if ((id_bit == 0) && (id_cmp_bit == 0)) { // 00: different bits in devices
-            if (id_bit_num == lastConflict) {
-                bit_to_write = 1;
-            } else if (id_bit_num > lastConflict) {
-                bit_to_write = 0;
-            } else {                                                                                          // #13
-                bit_to_write = CAST_UC((*(p + ((id_bit_num - 1) >> 3)) >> ((id_bit_num - 1) & 0x07)) & 0x01); // get bit ROM[idx]
-            }
-            if (!bit_to_write) { // bit_to_write==0 #15
-                lastZero = id_bit_num;
-            }
-        } else {
-            // all devices have the same bit
-            bit_to_write = id_bit;
-        }
-
-        // write, send
-        storeBit(CAST_UC(id_bit_num - 1), bit_to_write, (unsigned char*)p);
-#if INTDE
-        iStateSave = ATOMIC_BEGIN();
-#endif
-        W1_txBit(bit_to_write);
-#if INTDE
-        ATOMIC_END(iStateSave);
-#endif
-        id_bit_num++;
-    } while (id_bit_num <= 64);
-
-    lastConflict = lastZero;
-    if (lastConflict == 0) {
-        return (LAST_DEV);
-    }
-    return (W1_OK);
-}
-
-unsigned char w1_dow_crc8(unsigned char* p, unsigned char count)
-{
-    //unsigned char *ptr=(unsigned char *)p;
     unsigned char i;
     unsigned char crc = 0;
 
     i = 0;
     do {
-        crc = W1_crc8_table[crc ^ *(p + i)];
+        crc = W1_CRC8_TABLE[crc ^ *(p + i)];
     } while (++i < count);
     return (crc);
 }

@@ -6,29 +6,37 @@
 // Save and restore interrupt state
 #define INTDE (1)
 
-typedef enum {
-    CONN_FAULT    = 1,
-    W1_OK         = 2,
-    NODEV_PRESENT = 3,
-    LAST_DEV      = 4
-} W1ErrorEnum;
-
-// Init IO port and send reset to bus
-// return 0 if devices not found
+/**
+ * @brief Init IO port and send reset to bus
+ *
+ * @return return 0 if devices not found
+ */
 unsigned char W1Init(void);
 
-// Read 1 byte from bus
+/**
+ * @brief Read 1 byte from bus
+ *
+ * @return the data readed
+ */
 unsigned char W1Read(void);
 
-// Write 1 byte from bus
+/**
+ * @brief Write 1 byte from bus
+ *
+ * @param data the data to be writed
+ *
+ * @return always return 1
+ */
 unsigned char W1Write(unsigned char data);
 
-W1ErrorEnum W1Search(unsigned char cmd, unsigned char* p);
-// Search next ROM id on bus id-by-id.
-// write found id at the same place in a memory
-// return 0 if error or found last id
-
-//
+/**
+ * @brief CRC8 Calculate
+ *
+ * @param p unsigned char content pointer
+ * @param count lenght of the content
+ *
+ * @return crc8 result
+ */
 unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 
 //1-Wire port registers
@@ -54,14 +62,6 @@ unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 #define W1_BUS_OUT_0() CLEAR_BIT8(W1_BUS_ODR, W1_PIN)
 
 #define W1_Read_pin()
-//Standard 1-Wire commands
-#define W1_READ_ROM 0x33
-#define W1_MATCH_ROM 0x55
-#define W1_SKIP_ROM 0xCC
-#define W1_SRCH_ROM 0xF0
-#define W1_STRT_CONV 0x44
-#define W1_RD_SCRTPD 0xBE
-#define W1_SRCH_ALRM 0xEC
 
 /* time constants by Maxim IC
  * A - write '0'
