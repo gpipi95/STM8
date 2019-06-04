@@ -2,11 +2,6 @@
 #include "../core/atomic.h"
 #include "../core/delay.h"
 
-/* --- used APPLICATION NOTE 126 ---
-   --- Maxim's for time delays.  --- 
-   http://www.maximintegrated.com/en/app-notes/index.mvp/id/126
-   --- */
-
 unsigned char iStateSave; /* interrupt state */
 
 /* do CRC8 table */
@@ -31,39 +26,66 @@ const unsigned char W1_CRC8_TABLE[] = {
 };
 // clang-format on
 
+/**
+ * @brief read 1 bit from bus
+ *
+ * @return the bit readed
+ */
 unsigned char W1ReadBit(void)
 {
     unsigned char out;
-    _asm("nop");
+#if INTDE
+    iStateSave = ATOMIC_BEGIN();
+#endif
+    W1_BUS_OUTPUT();
     W1_BUS_OUT_0(); // low
-    delay_us(A);
+    delay_us(2);
     W1_BUS_OUT_1(); // high
-    delay_us(E);
-    out = CAST_UC((PF_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
-    delay_us(F);
+    W1_BUS_INPUT();
+    delay_us(10);
+    out = CAST_UC((W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    delay_us(58);
+#if INTDE
+    ATOMIC_END(iStateSave);
+#endif
     return (out);
 }
 
-unsigned char W1WriteBit(unsigned char bit)
+/**
+ * @brief write one bit to bus
+ *
+ * @param bit 0 to write 0 else to write 1
+ */
+void W1WriteBit(unsigned char bit)
 {
+#if INTDE
+    iStateSave = ATOMIC_BEGIN();
+#endif
     if (bit != 0) {
         // Write '1' bit
-        W1_BUS_OUT_0(); // Drives DQ low
-                        //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
-        delay_us(A);
+        W1_BUS_OUTPUT();
+        W1_BUS_OUT_0(); // Drives low
+        delay_us(65);
         W1_BUS_OUT_1(); // Releases the bus
-        delay_us(B);    // Complete the time slot and 10us recovery
+        delay_us(5);
     } else {
         // Write '0' bit
-        W1_BUS_OUT_0(); // Drives DQ low
-                        //if (bit_is_set(W1_IN, W1_PIN) ) { return 0;}
-        delay_us(C);
+        W1_BUS_OUTPUT();
+        W1_BUS_OUT_0(); // Drives low
+        delay_us(5);
         W1_BUS_OUT_1(); // Releases the bus
-        delay_us(D);
+        delay_us(65);
     }
-    return (1); // compatability CodeVision
+#if INTDE
+    ATOMIC_END(iStateSave);
+#endif
 }
 
+/**
+ * @brief Init IO port and send reset to bus
+ *
+ * @return return 0 if devices not found, 1 if device is found.
+ */
 unsigned char W1Init(void)
 {
     unsigned char presence;
@@ -75,57 +97,41 @@ unsigned char W1Init(void)
     // select Open drain output, fast mode
     W1_BUS_OUTPUT();
     W1_BUS_OUT_0();
-    delay_us(W1_RESET_TIME_HIGH);
-    W1_BUS_OUT_1();
-    delay_us(W1_PRESENCE_DETECT_LOW);
+    delay_us(500);
+    W1_BUS_OUT_1(); // release the bus
+                    //    W1_BUS_INPUT(); // change to input mode, rising edge
+    delay_us(100);
     presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
-    delay_us(J);
+    delay_us(500);
 #if INTDE
     ATOMIC_END(iStateSave);
 #endif
     return presence;
 }
 
-unsigned char W1Read(void)
+unsigned char W1ReadByte(void)
 {
-    // 1-wire read byte
     unsigned char out = 0x00;
     unsigned char j;
 
-#if INTDE
-    iStateSave = ATOMIC_BEGIN();
-#endif
-    delay_us(C);
     for (j = 0; j < 8; j++) {
         out >>= 1;
         out |= CAST_UC(W1ReadBit() ? 0x80 : 0);
     }
-#if INTDE
-    ATOMIC_END(iStateSave);
-#endif
     return (out);
 }
 
-unsigned char W1Write(unsigned char data)
+void W1WriteByte(unsigned char data)
 {
-    // 1-Wire write byte
     unsigned char i;
 
-#if INTDE
-    iStateSave = ATOMIC_BEGIN();
-#endif
     for (i = 0; i < 8; i++) {
         if ((data & (0x01 << i)) != 0) {
             W1WriteBit(1);
         } else {
             W1WriteBit(0);
         }
-        //		_asm("nop");
     }
-#if INTDE
-    ATOMIC_END(iStateSave);
-#endif
-    return (1); // for compatibility CodeVision
 }
 
 unsigned char W1DowCRC8(unsigned char* p, unsigned char count)

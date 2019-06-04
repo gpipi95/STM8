@@ -9,25 +9,24 @@
 /**
  * @brief Init IO port and send reset to bus
  *
- * @return return 0 if devices not found
+ * @return return 0 if devices not found, 1 if device is found.
  */
 unsigned char W1Init(void);
-
 /**
  * @brief Read 1 byte from bus
  *
  * @return the data readed
  */
-unsigned char W1Read(void);
+unsigned char W1ReadByte(void);
 
 /**
- * @brief Write 1 byte from bus
+ * @brief Write 1 byte to bus
  *
  * @param data the data to be writed
  *
  * @return always return 1
  */
-unsigned char W1Write(unsigned char data);
+void W1WriteByte(unsigned char data);
 
 /**
  * @brief CRC8 Calculate
@@ -61,26 +60,7 @@ unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 #define W1_BUS_OUT_1() SET_BIT8(W1_BUS_ODR, W1_PIN)
 #define W1_BUS_OUT_0() CLEAR_BIT8(W1_BUS_ODR, W1_PIN)
 
-#define W1_Read_pin()
-
-/* time constants by Maxim IC
- * A - write '0'
- * C - write '1'
- * A+E - read sample
-*/
-#define W1SLOT (70) /* A + B */
-#define A 6
-#define B (W1SLOT - A)
-#define C 60
-#define D (W1SLOT - C)
-#define E 9
-#define F (W1SLOT - E - A)
-#define G 0
-#define H 480
-#define I 70
-#define J 410
-
-#define W1_RESET_TIME_HIGH 480
-#define W1_PRESENCE_DETECT_LOW 70
+#define W1_READ_PIN() \
+    CAST_UC(W1_BUS_IDR & 1 << W1_PIN)
 
 #endif
