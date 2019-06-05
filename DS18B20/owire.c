@@ -61,20 +61,20 @@ void W1WriteBit(unsigned char bit)
 #if INTDE
     iStateSave = ATOMIC_BEGIN();
 #endif
-    if (bit != 0) {
-        // Write '1' bit
-        W1_BUS_OUTPUT();
-        W1_BUS_OUT_0(); // Drives low
-        delay_us(65);
-        W1_BUS_OUT_1(); // Releases the bus
-        delay_us(5);
-    } else {
+    if (bit == 0) {
         // Write '0' bit
         W1_BUS_OUTPUT();
         W1_BUS_OUT_0(); // Drives low
+        delay_us(70);
+        W1_BUS_OUT_1(); // Releases the bus
+        delay_us(5);
+    } else {
+        // Write '1' bit
+        W1_BUS_OUTPUT();
+        W1_BUS_OUT_0(); // Drives low
         delay_us(5);
         W1_BUS_OUT_1(); // Releases the bus
-        delay_us(65);
+        delay_us(70);
     }
 #if INTDE
     ATOMIC_END(iStateSave);
@@ -97,12 +97,12 @@ unsigned char W1Init(void)
     // select Open drain output, fast mode
     W1_BUS_OUTPUT();
     W1_BUS_OUT_0();
-    delay_us(500);
+    delay_us(480);
     W1_BUS_OUT_1(); // release the bus
                     //    W1_BUS_INPUT(); // change to input mode, rising edge
-    delay_us(100);
+    delay_us(80);
     presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
-    delay_us(500);
+    delay_us(380);
 #if INTDE
     ATOMIC_END(iStateSave);
 #endif

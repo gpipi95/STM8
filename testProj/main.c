@@ -8,7 +8,6 @@
 #include "../core/delay.h"
 
 #define Test_TM1638
-
 int main()
 {
 #ifdef Test_TM1638
@@ -17,9 +16,11 @@ int main()
 #endif
     unsigned char temp[9]; // temperature
 
-    PD_DDR     = 0x08;
-    PD_CR1     = 0x08; // push-pull
-    PD_CR2     = 0x00;
+#ifndef Test_TM1638
+    PD_DDR = 0x10;
+    PD_CR1 = 0x00; // push-pull
+    PD_CR2 = 0x00;
+#endif
     CLK_SWR    = 0xE1; // HSI selected as master clock source (reset value),16 MHz
     CLK_CKDIVR = 0x08; // fHSI= fHSI RC output/2 = 8MHz
     TM1638Init();
@@ -28,10 +29,10 @@ int main()
 #endif
     while (1) {
 #ifndef Test_TM1638
-        PD_ODR = PD_ODR | 0x08; // PD3 output to 1
-        delay_ms(2000);         // delay 100MS
-        PD_ODR = PD_ODR & 0xF7; // PD3 output 0
-        delay_ms(1000);         // 100MS
+        PF_ODR = PF_ODR | 0x10; // PD3 output to 1
+        delay_us(10);           // delay 100MS
+        PF_ODR = PF_ODR & 0xEF; // PD3 output 0
+        delay_us(10);           // 100MS
 #endif
 
 #ifdef Test_TM1638
