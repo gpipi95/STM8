@@ -8,5 +8,5 @@ Filename=testproj\testproj.stp
 Dependencies=
 [Options]
 ActiveProject=testproj
-ActiveConfig=Debug
+ActiveConfig=Release
 AddSortedElements=1

@@ -74,12 +74,15 @@ const unsigned char TM1638KeyMap[4][4] = {
     { 15, 7, 16, 8 }  // 3 TM1638 key Byte 4
 };
 // digit to display code table
-const unsigned char TM1638DigitToDisplayCodeMap[32] = {
+const unsigned char TM1638DigitToDisplayCodeMap[] = {
     // clang-format off
-    ndp0, ndp1, ndp2, ndp3, ndp4, ndp5, ndp6, ndp7,
-    ndp8, ndp9, ndpA, ndpB, ndpC, ndpD, ndpE, ndpF,
-    wdp0, wdp1, wdp2, wdp3, wdp4, wdp5, wdp6, wdp7,
-    wdp8, wdp9, wdpA, wdpB, wdpC, wdpD, wdpE, wdpF
+    ndp0, ndp1, ndp2, ndp3, ndp4, ndp5, ndp6, ndp7, //0-7
+    ndp8, ndp9, ndpA, ndpB, ndpC, ndpD, ndpE, ndpF, //8-15
+    wdp0, wdp1, wdp2, wdp3, wdp4, wdp5, wdp6, wdp7, //16-23
+    wdp8, wdp9, wdpA, wdpB, wdpC, wdpD, wdpE, wdpF, //24-31
+    segA, segB, segC, segD, segE, segF, segG, segDP, //32-39
+    0x00 //40
+    //0 , 1   , 2   , 3   , 4   , 5   , 6   , 7
     // clang-format on
 };
 // display buffer
@@ -138,7 +141,7 @@ void TM1638Readkey(unsigned char* keyValue)
 
         STB_Clear();
         TM1638WriteByte(READ_KEY_COMMAND);
-        delay_us(100);
+        delay_us(50);
         for (i = 0; i < 4; i++) {
             TM1638ReadByte(c + i);
             *(c + i) = *(c + i) & 0x77; /* clear 4 and 8 bit */
@@ -177,7 +180,7 @@ void TM1638Readkey(unsigned char* keyValue)
 void TM1638Init(void)
 {
     // init displ data
-    unsigned char displayData[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    unsigned char displayData[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     // init IO state
     SET_BIT8(TM1638_PORT_DDR, DIO_PIN); // PA1-4 set to output
     SET_BIT8(TM1638_PORT_DDR, CLK_PIN); // PA1-4 set to output
@@ -199,7 +202,7 @@ void TM1638ConvertDisplaySymbol(unsigned char pos, unsigned char symbol)
     if (pos < 8) /* max 8 led */
     {
         unsigned char i;
-        if (symbol < 32) {
+        if (symbol < 41) {
             symbol = TM1638DigitToDisplayCodeMap[symbol];
         }
         for (i = 0; i < 8; ++i) { /* 8 segments need to be changed */

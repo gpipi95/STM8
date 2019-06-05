@@ -28,11 +28,16 @@ unsigned char DS18B20Init(void);
  */
 unsigned char DS18B20ConvertTemp(void);
 /**
- * @brief Read temperature
- *
- * @param temp the temperature
+ * @brief Read scrtpd
  *
  * @return 1 for success, 0 for failed
  */
-unsigned char DS18B20ReadTemp(unsigned char* temp);
+unsigned char DS18B20ReadSCRTPD(void);
+
+/**
+ * @brief get temperature
+ *
+ * @return 
+ */
+short int DS18B20GetTemp(void);
 #endif /* ifndef _DS18B20_H_ */
