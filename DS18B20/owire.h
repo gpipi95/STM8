@@ -3,9 +3,6 @@
 
 #include "../core/utility.h"
 
-// Save and restore interrupt state
-#define INTDE (1)
-
 /**
  * @brief Init IO port and send reset to bus
  *

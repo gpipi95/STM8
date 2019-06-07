@@ -2,8 +2,6 @@
 #include "../core/atomic.h"
 #include "../core/delay.h"
 
-unsigned char iStateSave; /* interrupt state */
-
 /* do CRC8 table */
 const unsigned char W1_CRC8_TABLE[] = {
     // clang-format off
@@ -34,9 +32,8 @@ const unsigned char W1_CRC8_TABLE[] = {
 unsigned char W1ReadBit(void)
 {
     unsigned char out;
-#if INTDE
-    iStateSave = ATOMIC_BEGIN();
-#endif
+    ATOMIC_BEGIN();
+
     W1_BUS_OUTPUT();
     W1_BUS_OUT_0(); // low
     delay_us(2);
@@ -45,9 +42,8 @@ unsigned char W1ReadBit(void)
     delay_us(10);
     out = CAST_UC((W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
     delay_us(58);
-#if INTDE
-    ATOMIC_END(iStateSave);
-#endif
+
+    ATOMIC_END();
     return (out);
 }
 
@@ -58,9 +54,8 @@ unsigned char W1ReadBit(void)
  */
 void W1WriteBit(unsigned char bit)
 {
-#if INTDE
-    iStateSave = ATOMIC_BEGIN();
-#endif
+    ATOMIC_BEGIN();
+
     if (bit == 0) {
         // Write '0' bit
         W1_BUS_OUTPUT();
@@ -76,9 +71,8 @@ void W1WriteBit(unsigned char bit)
         W1_BUS_OUT_1(); // Releases the bus
         delay_us(70);
     }
-#if INTDE
-    ATOMIC_END(iStateSave);
-#endif
+
+    ATOMIC_END();
 }
 
 /**
@@ -89,10 +83,8 @@ void W1WriteBit(unsigned char bit)
 unsigned char W1Init(void)
 {
     unsigned char presence;
+    ATOMIC_BEGIN();
 
-#if INTDE
-    iStateSave = ATOMIC_BEGIN();
-#endif
     /* Init IO and reset presence pulse */
     // select Open drain output, fast mode
     W1_BUS_OUTPUT();
@@ -103,9 +95,8 @@ unsigned char W1Init(void)
     delay_us(80);
     presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
     delay_us(380);
-#if INTDE
-    ATOMIC_END(iStateSave);
-#endif
+
+    ATOMIC_END();
     return presence;
 }
 

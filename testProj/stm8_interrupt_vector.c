@@ -2,6 +2,7 @@
  *	Copyright (c) 2007 STMicroelectronics
  */
 #include "STM8S103K3.h"
+#include "helper.h"
 
 typedef void @far (*interrupt_handler_t)(void);
 
@@ -12,12 +13,8 @@ struct interrupt_vector {
 
 @far @interrupt void TIM2Handle(void)
 {
-    static unsigned char counter = 255;
-    TIM2_SR1                     = 0x00; // 清除更新标??
-    if (counter-- == 0) {
-        counter = 255;
-        PD_ODR  = PD_ODR ^ 0x08; // LED驱动信号取反
-    }                            //LED闪烁频率=2MHZ/2/60000/2=8.3
+    TIM2_SR1 = 0x00;
+    TimeInterruptWork();
     return;
 }
 @far @interrupt void NonHandledInterrupt(void)

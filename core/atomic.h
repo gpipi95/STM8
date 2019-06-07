@@ -2,8 +2,10 @@
 #define _ATOMIC_H_
 
 #include "../core/STM8S103K3T6C.h"
-#define ATOMIC_BEGIN() GetInterruptState()
-#define ATOMIC_END(x) SetInterruptState(x)
+
+extern unsigned char InterruptStateSave;
+#define ATOMIC_BEGIN() InterruptStateSave = GetInterruptState()
+#define ATOMIC_END() SetInterruptState(InterruptStateSave)
 
 unsigned char @ inline GetInterruptState(void)
 {
