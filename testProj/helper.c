@@ -81,7 +81,12 @@ void GetDisplayTempTask(void)
                 temp = CAST_UC((temperature / 1000) % 10);
             }
             TM1638OneSymbolDisplay(7, temp);
-            TM1638OneSymbolDisplay(6, CAST_UC((temperature / 100) % 10));
+            if (temp == 40) {
+                if (CAST_UC((temperature / 100) % 10) != 0) {
+                    temp = CAST_UC((temperature / 100) % 10);
+                }
+            }
+            TM1638OneSymbolDisplay(6, temp);
             TM1638OneSymbolDisplay(5, CAST_UC((temperature / 10) % 10) + 16);
             TM1638OneSymbolDisplay(4, CAST_UC(temperature % 10));
         }
