@@ -12,10 +12,12 @@ flags = [
 '-ISUB','C:\\Program Files (x86)\\COSMIC\\CXSTM8_EVAL\\Hstm8',
 '-ISUB','C:\\Program Files (x86)\\STMicroelectronics\\st_toolset\\include',
 '-I','.',
-'-I','.\core',
-'-I','.\testProj',
-'-I','.\DS18B20',
-'-I','.\TM1638'
+'-I','./core',
+'-I','./testProj',
+'-I','./DS18B20',
+'-I','./TM1638',
+'-I','./STM8S_StdPeriph_Driver/inc',
+'-I','./PID'
 ]
 
 

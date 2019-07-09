@@ -1,20 +1,26 @@
 /*----------------------------------------------------------
  *  test
  *--------------------------------------------------------*/
+//#include "../PID/PID_v1.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s_clk.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
-#include "../core/STM8S103K3T6C.h"
+//#include "../core/STM8S103K3T6C.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 #include "../core/TIM2.h"
 #include "../core/delay.h"
 #include "helper.h"
 
-int main()
+void main(void)
 {
-    PD_DDR |= 0x01 << 3;
-    PD_CR1 |= 0x01 << 3; // push-pull
-    PD_CR2 = 0x00;
-
-    CLK_SWR    = 0xE1; // HSI selected as master clock source (reset value),16 MHz
-    CLK_CKDIVR = 0x08; // fHSI= fHSI RC output/2 = 8MHz
+    GPIO_Init(GPIOD, (GPIO_Pin_TypeDef)(GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
+    //        GPIOD->DDR |= 0x01 << 3;
+    //        GPIOD->CR1 |= 0x01 << 3; // push-pull
+    //        GPIOD->CR2 = 0x00;
+    CLK_DeInit();
+    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
+    //    CLK->SWR    = 0xE1; // HSI selected as master clock source (reset value),16 MHz
+    //    CLK->CKDIVR = 0x08; // fHSI= fHSI RC output/2 = 8MHz
 
     _asm("sim"); //先关闭总中断
     TIM2Init();
@@ -26,3 +32,24 @@ int main()
         GetDisplayTempTask();
     }
 }
+
+#ifdef USE_FULL_ASSERT
+
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *   where the assert_param error has occurred.
+  * @param file: pointer to the source file name
+  * @param line: assert_param error line source number
+  * @retval : None
+  */
+void assert_failed(u8* file, u32 line)
+{
+    /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+    /* Infinite loop */
+    while (1) {
+    }
+}
+#endif
+

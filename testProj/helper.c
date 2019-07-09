@@ -1,5 +1,6 @@
 #include "helper.h"
 #include "../DS18B20/DS18B20.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
 #include "../core/atomic.h"
 
@@ -97,7 +98,8 @@ void GetDisplayTempTask(void)
 void BlinkPD3LedTask(void)
 {
     if (TaskCanRun(LED_TASK)) {
-        PD_ODR = PD_ODR ^ 0x08; // LED reverse
+        //        PD_ODR = PD_ODR ^ 0x08; // LED reverse
+        GPIO_WriteReverse(GPIOD, GPIO_PIN_3);
         TaskRunClear(LED_TASK);
     }
 }

@@ -1,16 +1,13 @@
 #ifndef _TM1638_H
 #define _TM1638_H
-#include "../core/STM8S103K3T6C.h"
+#include "stm8s_gpio.h"
 #include "../core/utility.h"
 
-#define TM1638_PORT_ODR PA_ODR
-#define TM1638_PORT_IDR PA_IDR
-#define TM1638_PORT_DDR PA_DDR
-#define TM1638_PORT_CR1 PA_CR1
-#define TM1638_PORT_CR2 PA_CR2
-#define DIO_PIN 1
-#define CLK_PIN 2
-#define STB_PIN 3
+#define TM1638_PORT GPIOA
+
+#define DIO_PIN GPIO_PIN_1
+#define CLK_PIN GPIO_PIN_2
+#define STB_PIN GPIO_PIN_3
 
 // if no valid key return value is 0xFF
 void TM1638Readkey(unsigned char* keyValue); /* read key values, 0xFF stands for invalid key */
