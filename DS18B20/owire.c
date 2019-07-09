@@ -40,7 +40,8 @@ unsigned char W1ReadBit(void)
     W1_BUS_OUT_1(); // high
     W1_BUS_INPUT();
     delay_us(10);
-    out = CAST_UC((W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    //    out = CAST_UC((W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    out = GPIO_ReadInputPin(W1_BUS_PORT, W1_PIN) ? 0x01 : 0x00;
     delay_us(58);
 
     ATOMIC_END();
@@ -93,7 +94,8 @@ unsigned char W1Init(void)
     W1_BUS_OUT_1(); // release the bus
                     //    W1_BUS_INPUT(); // change to input mode, rising edge
     delay_us(80);
-    presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
+    presence = GPIO_ReadInputPin(W1_BUS_PORT, W1_PIN) ? 0x00 : 0x01;
+    //    presence = CAST_UC(!(W1_BUS_IDR & 1 << W1_PIN) ? 0x01 : 0x00);
     delay_us(380);
 
     ATOMIC_END();

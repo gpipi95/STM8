@@ -43,16 +43,27 @@
 #define wdpE (ndpE + segDP)
 #define wdpF (ndpF + segDP)
 
-#define DIO_Set() SET_BIT8(TM1638_PORT->ODR, DIO_PIN)     //  PA1
-#define DIO_Clear() CLEAR_BIT8(TM1638_PORT->ODR, DIO_PIN) //  PA1
-#define CLK_Set() SET_BIT8(TM1638_PORT->ODR, CLK_PIN)     //  PA2
-#define CLK_Clear() CLEAR_BIT8(TM1638_PORT->ODR, CLK_PIN) //  PA2
-#define STB_Set() SET_BIT8(TM1638_PORT->ODR, STB_PIN)     //  PA3
-#define STB_Clear() CLEAR_BIT8(TM1638_PORT->ODR, STB_PIN) //  PA3
+//#define DIO_Set() SET_BIT8(TM1638_PORT->ODR, DIO_PIN)     //  PA1
+//#define DIO_Clear() CLEAR_BIT8(TM1638_PORT->ODR, DIO_PIN) //  PA1
+//#define CLK_Set() SET_BIT8(TM1638_PORT->ODR, CLK_PIN)     //  PA2
+//#define CLK_Clear() CLEAR_BIT8(TM1638_PORT->ODR, CLK_PIN) //  PA2
+//#define STB_Set() SET_BIT8(TM1638_PORT->ODR, STB_PIN)     //  PA3
+//#define STB_Clear() CLEAR_BIT8(TM1638_PORT->ODR, STB_PIN) //  PA3
 
-#define DIO_Input_Mode() CLEAR_BIT8(TM1638_PORT->DDR, DIO_PIN)  // Set DIO to input
-#define DIO_Output_Mode() SET_BIT8(TM1638_PORT->DDR, DIO_PIN)   // Set DIO to output
-#define DIO_Status() TM1638_PORT->IDR& CAST_UC(0x01 << DIO_PIN) // read DIO bit
+#define DIO_Set() GPIO_WriteHigh(TM1638_PORT, DIO_PIN)  //  PA1
+#define DIO_Clear() GPIO_WriteLow(TM1638_PORT, DIO_PIN) //  PA1
+#define CLK_Set() GPIO_WriteHigh(TM1638_PORT, CLK_PIN)  //  PA2
+#define CLK_Clear() GPIO_WriteLow(TM1638_PORT, CLK_PIN) //  PA2
+#define STB_Set() GPIO_WriteHigh(TM1638_PORT, STB_PIN)  //  PA3
+#define STB_Clear() GPIO_WriteLow(TM1638_PORT, STB_PIN) //  PA3
+
+//#define DIO_Input_Mode() CLEAR_BIT8(TM1638_PORT->DDR, DIO_PIN)  // Set DIO to input
+//#define DIO_Output_Mode() SET_BIT8(TM1638_PORT->DDR, DIO_PIN)   // Set DIO to output
+//#define DIO_Status() TM1638_PORT->IDR& CAST_UC(0x01 << DIO_PIN) // read DIO bit
+
+#define DIO_Input_Mode() GPIO_Init(TM1638_PORT, DIO_PIN, GPIO_MODE_IN_PU_NO_IT)       // Set DIO to input
+#define DIO_Output_Mode() GPIO_Init(TM1638_PORT, DIO_PIN, GPIO_MODE_OUT_PP_HIGH_SLOW) // Set DIO to output
+#define DIO_Status() GPIO_ReadInputPin(TM1638_PORT, DIO_PIN)                          // read DIO bit
 
 #define DISPLAY_CONTROL_COMMAND 0x8A
 #define AUTO_INCREASE_COMMAND 0x40
@@ -182,17 +193,19 @@ void TM1638Init(void)
     // init displ data
     unsigned char displayData[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
     // init IO state
-    SET_BIT8(TM1638_PORT->DDR, DIO_PIN); // PA1-4 set to output
-    SET_BIT8(TM1638_PORT->DDR, CLK_PIN); // PA1-4 set to output
-    SET_BIT8(TM1638_PORT->DDR, STB_PIN); // PA1-4 set to output
+    //    SET_BIT8(TM1638_PORT->DDR, DIO_PIN); // PA1-4 set to output
+    //    SET_BIT8(TM1638_PORT->DDR, CLK_PIN); // PA1-4 set to output
+    //    SET_BIT8(TM1638_PORT->DDR, STB_PIN); // PA1-4 set to output
+    //
+    //    SET_BIT8(TM1638_PORT->CR1, DIO_PIN); //  push-pull/pull up
+    //    SET_BIT8(TM1638_PORT->CR1, CLK_PIN); //  push-pull/pull up
+    //    SET_BIT8(TM1638_PORT->CR1, STB_PIN); //  push-pull/pull up
+    //
+    //    CLEAR_BIT8(TM1638_PORT->CR2, DIO_PIN); //  push-pull/pull up
+    //    CLEAR_BIT8(TM1638_PORT->CR2, CLK_PIN); //  push-pull/pull up
+    //    CLEAR_BIT8(TM1638_PORT->CR2, STB_PIN); //  push-pull/pull up
 
-    SET_BIT8(TM1638_PORT->CR1, DIO_PIN); //  push-pull/pull up
-    SET_BIT8(TM1638_PORT->CR1, CLK_PIN); //  push-pull/pull up
-    SET_BIT8(TM1638_PORT->CR1, STB_PIN); //  push-pull/pull up
-
-    CLEAR_BIT8(TM1638_PORT->CR2, DIO_PIN); //  push-pull/pull up
-    CLEAR_BIT8(TM1638_PORT->CR2, CLK_PIN); //  push-pull/pull up
-    CLEAR_BIT8(TM1638_PORT->CR2, STB_PIN); //  push-pull/pull up
+    GPIO_Init(TM1638_PORT, (GPIO_Pin_TypeDef)DIO_PIN | CLK_PIN | STB_PIN, GPIO_MODE_OUT_PP_HIGH_SLOW); // PA1-4 set to output
 
     TM1638EightSymbolDisplay(displayData);
 }

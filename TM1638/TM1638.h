@@ -1,6 +1,7 @@
 #ifndef _TM1638_H
 #define _TM1638_H
-#include "stm8s_gpio.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../core/utility.h"
 
 #define TM1638_PORT GPIOA

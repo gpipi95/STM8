@@ -276,7 +276,7 @@ BitClr	..\stm8s_stdperiph_driver\inc\stm8s.h	2822;"	macro
 BitSet	..\stm8s_stdperiph_driver\inc\stm8s.h	2823;"	macro
 BitStatus	..\stm8s_stdperiph_driver\inc\stm8s.h	233;"	typedef	typeref:enum:__anon3
 BitVal	..\stm8s_stdperiph_driver\inc\stm8s.h	2824;"	macro
-BlinkPD3LedTask	helper.c	97;"	function	signature:(void)
+BlinkPD3LedTask	helper.c	98;"	function	signature:(void)
 BlinkPD3LedTask	helper.h	23;"	prototype	signature:(void)
 CAN	..\stm8s_stdperiph_driver\inc\stm8s.h	2616;"	macro
 CAN_BTR1_RESET_VALUE	..\stm8s_stdperiph_driver\inc\stm8s.h	2504;"	macro
@@ -1134,7 +1134,7 @@ GPIO_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	265;"	struct
 GTR	..\stm8s_stdperiph_driver\inc\stm8s.h	1778;"	member	struct:UART1_struct
 GTR	..\stm8s_stdperiph_driver\inc\stm8s.h	1877;"	member	struct:UART2_struct
 GTR	..\stm8s_stdperiph_driver\inc\stm8s.h	2076;"	member	struct:UART4_struct
-GetDisplayTempTask	helper.c	62;"	function	signature:(void)
+GetDisplayTempTask	helper.c	63;"	function	signature:(void)
 GetDisplayTempTask	helper.h	7;"	prototype	signature:(void)
 GetInterruptState	..\core\atomic.h	10;"	function	signature:(void)
 HSE_VALUE	..\stm8s_stdperiph_driver\inc\stm8s.h	109;"	macro
@@ -1592,9 +1592,9 @@ IWDG_WriteAccess_Enable	..\stm8s_stdperiph_driver\inc\stm8s_iwdg.h	90;"	enumerat
 IWDG_WriteAccess_TypeDef	..\stm8s_stdperiph_driver\inc\stm8s_iwdg.h	92;"	typedef	typeref:enum:__anon57
 IWDG_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	1609;"	struct
 InterruptStateSave	..\core\atomic.c	3;"	variable
-KEYBOARD_TASK	helper.c	7;"	macro	file:
+KEYBOARD_TASK	helper.c	8;"	macro	file:
 KR	..\stm8s_stdperiph_driver\inc\stm8s.h	1611;"	member	struct:IWDG_struct
-LED_TASK	helper.c	8;"	macro	file:
+LED_TASK	helper.c	9;"	macro	file:
 LSI_FREQUENCY_MAX	..\stm8s_stdperiph_driver\inc\stm8s_awu.h	77;"	macro
 LSI_FREQUENCY_MAX	..\stm8s_stdperiph_driver\inc\stm8s_beep.h	64;"	macro
 LSI_FREQUENCY_MIN	..\stm8s_stdperiph_driver\inc\stm8s_awu.h	76;"	macro
@@ -1652,7 +1652,7 @@ NOPT3	..\stm8s_stdperiph_driver\inc\stm8s.h	1592;"	member	struct:OPT_struct
 NOPT4	..\stm8s_stdperiph_driver\inc\stm8s.h	1594;"	member	struct:OPT_struct
 NOPT5	..\stm8s_stdperiph_driver\inc\stm8s.h	1596;"	member	struct:OPT_struct
 NOPT7	..\stm8s_stdperiph_driver\inc\stm8s.h	1600;"	member	struct:OPT_struct
-NUM_OF_TASK	helper.c	6;"	macro	file:
+NUM_OF_TASK	helper.c	7;"	macro	file:
 NonHandledInterrupt	stm8s_it.h	41;"	prototype	signature:(void)
 OARH	..\stm8s_stdperiph_driver\inc\stm8s.h	1334;"	member	struct:I2C_struct
 OARL	..\stm8s_stdperiph_driver\inc\stm8s.h	1333;"	member	struct:I2C_struct
@@ -1735,7 +1735,7 @@ RST_SR_WWDGF	..\stm8s_stdperiph_driver\inc\stm8s.h	1685;"	macro
 RST_TypeDef	..\stm8s_stdperiph_driver\inc\stm8s.h	1675;"	typedef	typeref:struct:RST_struct
 RST_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	1671;"	struct
 RXCRCR	..\stm8s_stdperiph_driver\inc\stm8s.h	1704;"	member	struct:SPI_struct
-ReadKeyboardTask	helper.c	105;"	function	signature:(void)
+ReadKeyboardTask	helper.c	107;"	function	signature:(void)
 ReadKeyboardTask	helper.h	27;"	prototype	signature:(void)
 Reserved1	..\stm8s_stdperiph_driver\inc\stm8s.h	2299;"	member	struct:__anon6::__anon7::__anon13
 Reserved2	..\stm8s_stdperiph_driver\inc\stm8s.h	2305;"	member	struct:__anon6::__anon7::__anon13
@@ -1912,7 +1912,7 @@ TDRH	..\stm8s_stdperiph_driver\inc\stm8s.h	398;"	member	struct:ADC2_struct
 TDRL	..\stm8s_stdperiph_driver\inc\stm8s.h	328;"	member	struct:ADC1_struct
 TDRL	..\stm8s_stdperiph_driver\inc\stm8s.h	399;"	member	struct:ADC2_struct
 TECR	..\stm8s_stdperiph_driver\inc\stm8s.h	2295;"	member	struct:__anon6::__anon7::__anon13
-TEMPERATURE_TASK	helper.c	9;"	macro	file:
+TEMPERATURE_TASK	helper.c	10;"	macro	file:
 TI1_Config	..\stm8s_stdperiph_driver\src\stm8s_tim1.c	2174;"	function	file:	signature:(uint8_t TIM1_ICPolarity, uint8_t TIM1_ICSelection, uint8_t TIM1_ICFilter)
 TI1_Config	..\stm8s_stdperiph_driver\src\stm8s_tim1.c	39;"	prototype	file:	signature:(uint8_t TIM1_ICPolarity, uint8_t TIM1_ICSelection, uint8_t TIM1_ICFilter)
 TI1_Config	..\stm8s_stdperiph_driver\src\stm8s_tim2.c	1181;"	function	file:	signature:(uint8_t TIM2_ICPolarity, uint8_t TIM2_ICSelection, uint8_t TIM2_ICFilter)
@@ -2355,6 +2355,7 @@ TIM1_UpdateSource_TypeDef	..\stm8s_stdperiph_driver\inc\stm8s_tim1.h	402;"	typed
 TIM1_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	612;"	struct
 TIM2	..\stm8s_stdperiph_driver\inc\stm8s.h	2681;"	macro
 TIM2Init	..\core\tim2.c	3;"	function
+TIM2Init	..\core\tim2.h	4;"	prototype	signature:(void)
 TIM2_ARRH_ARR	..\stm8s_stdperiph_driver\inc\stm8s.h	932;"	macro
 TIM2_ARRH_RESET_VALUE	..\stm8s_stdperiph_driver\inc\stm8s.h	871;"	macro
 TIM2_ARRL_ARR	..\stm8s_stdperiph_driver\inc\stm8s.h	933;"	macro
@@ -2872,13 +2873,13 @@ TRUE	..\stm8s_stdperiph_driver\inc\stm8s.h	231;"	enumerator	enum:__anon2
 TSR	..\stm8s_stdperiph_driver\inc\stm8s.h	2178;"	member	struct:__anon6
 TXCRCR	..\stm8s_stdperiph_driver\inc\stm8s.h	1705;"	member	struct:SPI_struct
 T_COUNT	..\core\delay.h	13;"	macro
-TaskCanRun	helper.c	43;"	function	signature:(unsigned char taskNum)
+TaskCanRun	helper.c	44;"	function	signature:(unsigned char taskNum)
 TaskCanRun	helper.h	19;"	prototype	signature:(unsigned char taskNum)
-TaskData	helper.c	17;"	variable
-TaskRunClear	helper.c	53;"	function	signature:(unsigned char taskNum)
+TaskData	helper.c	18;"	variable
+TaskRunClear	helper.c	54;"	function	signature:(unsigned char taskNum)
 TaskRunClear	helper.h	33;"	prototype	signature:(unsigned char taskNum)
-Task_t	helper.c	15;"	typedef	typeref:struct:__anon1	file:
-TimeInterruptWork	helper.c	30;"	function	signature:(void)
+Task_t	helper.c	16;"	typedef	typeref:struct:__anon1	file:
+TimeInterruptWork	helper.c	31;"	function	signature:(void)
 TimeInterruptWork	helper.h	11;"	prototype	signature:(void)
 TxMailbox	..\stm8s_stdperiph_driver\inc\stm8s.h	2205;"	member	union:__anon6::__anon7	typeref:struct:__anon6::__anon7::__anon8
 U16_MAX	..\stm8s_stdperiph_driver\inc\stm8s.h	243;"	macro
@@ -3288,6 +3289,7 @@ _IAR_	..\stm8s_stdperiph_driver\inc\stm8s.h	87;"	macro
 _OWIRE_H_	..\ds18b20\owire.h	2;"	macro
 _RAISONANCE_	..\stm8s_stdperiph_driver\inc\stm8s.h	85;"	macro
 _STM8S103K3T6C_H	..\core\stm8s103k3t6c.h	2;"	macro
+_TIM2_H_	..\core\tim2.h	2;"	macro
 _TM1638_H	..\tm1638\tm1638.h	2;"	macro
 _UTILITY_H	..\core\utility.h	2;"	macro
 __CSMC__	..\core\stm8s103k3t6c.h	6;"	macro
@@ -3324,12 +3326,12 @@ __STM8S_WWDG_H	..\stm8s_stdperiph_driver\inc\stm8s_wwdg.h	30;"	macro
 _delay_H_	..\core\delay.h	2;"	macro
 _stext	stm8s_it.h	40;"	prototype	signature:(void)
 _vectab	stm8_interrupt_vector.c	14;"	variable
-assert_failed	main.c	41;"	function	signature:(u8* file, u32 line)
+assert_failed	main.c	45;"	function	signature:(u8* file, u32 line)
 assert_failed	stm8s_conf.h	108;"	prototype	signature:(uint8_t* file, uint32_t line)
 assert_param	stm8s_conf.h	106;"	macro
 assert_param	stm8s_conf.h	110;"	macro
 bool	..\stm8s_stdperiph_driver\inc\stm8s.h	231;"	typedef	typeref:enum:__anon2
-counter	helper.c	13;"	member	struct:__anon1	file:
+counter	helper.c	14;"	member	struct:__anon1	file:
 delay_cycl	..\core\delay.h	11;"	function	signature:(unsigned short ticks)
 delay_ms	..\core\delay.h	22;"	function	signature:(unsigned short ms)
 delay_us	..\core\delay.h	17;"	function	signature:(const unsigned short us)
@@ -3349,8 +3351,8 @@ interrupt_handler	stm8_interrupt_vector.c	12;"	member	struct:interrupt_vector	fi
 interrupt_handler_t	stm8_interrupt_vector.c	8;"	typedef	file:
 interrupt_instruction	stm8_interrupt_vector.c	11;"	member	struct:interrupt_vector	file:
 interrupt_vector	stm8_interrupt_vector.c	10;"	struct	file:
-isRun	helper.c	14;"	member	struct:__anon1	file:
-main	main.c	12;"	function	signature:(void)
+isRun	helper.c	15;"	member	struct:__anon1	file:
+main	main.c	14;"	function	signature:(void)
 ndp0	..\tm1638\tm1638.c	13;"	macro	file:
 ndp1	..\tm1638\tm1638.c	14;"	macro	file:
 ndp2	..\tm1638\tm1638.c	15;"	macro	file:
@@ -3370,7 +3372,7 @@ ndpF	..\tm1638\tm1638.c	28;"	macro	file:
 nop	..\stm8s_stdperiph_driver\inc\stm8s.h	2720;"	macro
 nop	..\stm8s_stdperiph_driver\inc\stm8s.h	2729;"	macro
 nop	..\stm8s_stdperiph_driver\inc\stm8s.h	2739;"	macro
-reloadPeriod	helper.c	12;"	member	struct:__anon1	file:
+reloadPeriod	helper.c	13;"	member	struct:__anon1	file:
 rim	..\stm8s_stdperiph_driver\inc\stm8s.h	2718;"	macro
 rim	..\stm8s_stdperiph_driver\inc\stm8s.h	2727;"	macro
 rim	..\stm8s_stdperiph_driver\inc\stm8s.h	2737;"	macro
