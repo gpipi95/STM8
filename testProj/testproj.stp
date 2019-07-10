@@ -494,6 +494,16 @@ Next=Root.Source Files.main.c
 [Root.Source Files.main.c]
 ElemType=File
 PathName=main.c
+Next=Root.Source Files.param.c
+
+[Root.Source Files.param.c]
+ElemType=File
+PathName=param.c
+Next=Root.Source Files.param.h
+
+[Root.Source Files.param.h]
+ElemType=File
+PathName=param.h
 Next=Root.Source Files.stm8_interrupt_vector.c
 
 [Root.Source Files.stm8_interrupt_vector.c]

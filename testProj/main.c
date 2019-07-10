@@ -14,13 +14,10 @@
 void main(void)
 {
     GPIO_Init(GPIOD, (GPIO_Pin_TypeDef)(GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
-    //        GPIOD->DDR |= 0x01 << 3;
-    //        GPIOD->CR1 |= 0x01 << 3; // push-pull
-    //        GPIOD->CR2 = 0x00;
+		// HSI selected as master clock source (reset value),16 MHz
+    // fHSI= fHSI RC output/2 = 8MHz
     CLK_DeInit();
     CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
-    //    CLK->SWR    = 0xE1; // HSI selected as master clock source (reset value),16 MHz
-    //    CLK->CKDIVR = 0x08; // fHSI= fHSI RC output/2 = 8MHz
 
     _asm("sim"); //先关闭总中断
     TIM2Init();

@@ -1,5 +1,5 @@
 #include "DS18B20.h"
-#include "../core/STM8S103K3T6C.h"
+//#include "../core/STM8S103K3T6C.h"
 #include "../core/delay.h"
 #include "owire.h"
 
@@ -30,9 +30,9 @@ unsigned char DS18B20ReadSCRTPD()
     }
     return *(DS18B20_SCRTPD + 8) == W1DowCRC8(DS18B20_SCRTPD, 8);
 }
-short int DS18B20GetTemp()
+
+bool DS18B20GetTemp(short int* temp)
 {
-    short int     temp = 85;
     unsigned char degree, belowDegree;
     degree      = 0;
     belowDegree = 0;
@@ -40,8 +40,9 @@ short int DS18B20GetTemp()
         degree      = ((*(DS18B20_SCRTPD + 1)) << 4) & 0x7F;
         degree      = degree + (((*DS18B20_SCRTPD) >> 4) & 0x0F);
         belowDegree = ((*DS18B20_SCRTPD) & 0x0F) * 10 / 16;
-        temp        = -1 * (((*(DS18B20_SCRTPD + 1)) & 0x08) >> 3) + degree * 10 + belowDegree;
+        *temp       = -1 * (((*(DS18B20_SCRTPD + 1)) & 0x08) >> 3) + degree * 10 + belowDegree;
+        return TRUE;
     }
-    return temp;
+    return FALSE;
 }
 

@@ -39,33 +39,14 @@ unsigned char W1DowCRC8(unsigned char* p, unsigned char count);
 
 //1-Wire port registers
 #define W1_BUS_PORT GPIOF
-//#define W1_BUS_ODR GPIOF->ODR
-//#define W1_BUS_IDR GPIOF->IDR
-//#define W1_BUS_DDR GPIOF->DDR
-//#define W1_BUS_CR1 GPIOF->CR1
-//#define W1_BUS_CR2 GPIOF->CR2
 #define W1_PIN GPIO_PIN_4
 
 // input without pull up
 #define W1_BUS_INPUT() GPIO_Init(W1_BUS_PORT, W1_PIN, GPIO_MODE_IN_PU_NO_IT)
-//#define W1_BUS_INPUT()              \
-//    CLEAR_BIT8(W1_BUS_DDR, W1_PIN); \
-//    CLEAR_BIT8(W1_BUS_CR1, W1_PIN); \
-//    CLEAR_BIT8(W1_BUS_CR2, W1_PIN)
 // open drain output
 #define W1_BUS_OUTPUT() GPIO_Init(W1_BUS_PORT, W1_PIN, GPIO_MODE_OUT_OD_HIZ_SLOW)
-//#define W1_BUS_OUTPUT()             \
-//    SET_BIT8(W1_BUS_DDR, W1_PIN);   \
-//    CLEAR_BIT8(W1_BUS_CR1, W1_PIN); \
-//    CLEAR_BIT8(W1_BUS_CR2, W1_PIN)
-
-//#define W1_BUS_OUT_1() SET_BIT8(W1_BUS_ODR, W1_PIN)
-//#define W1_BUS_OUT_0() CLEAR_BIT8(W1_BUS_ODR, W1_PIN)
 #define W1_BUS_OUT_1() GPIO_WriteHigh(W1_BUS_PORT, W1_PIN)
 #define W1_BUS_OUT_0() GPIO_WriteLow(W1_BUS_PORT, W1_PIN)
-
 #define W1_READ_PIN() GPIO_ReadInputPin(W1_BUS_PORT, W1_PIN)
-//#define W1_READ_PIN() \
-//    CAST_UC(W1_BUS_IDR & 1 << W1_PIN)
 
 #endif

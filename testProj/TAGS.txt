@@ -614,7 +614,7 @@ CLK_PERIPHERAL_TIMER6	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	128;"	enumerator
 CLK_PERIPHERAL_UART1	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	122;"	enumerator	enum:__anon31
 CLK_PERIPHERAL_UART2	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	126;"	enumerator	enum:__anon31
 CLK_PERIPHERAL_UART3	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	127;"	enumerator	enum:__anon31
-CLK_PIN	..\tm1638\tm1638.h	9;"	macro
+CLK_PIN	..\tm1638\tm1638.h	10;"	macro
 CLK_PRESCALER_CPUDIV1	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	185;"	enumerator	enum:__anon34
 CLK_PRESCALER_CPUDIV128	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	192;"	enumerator	enum:__anon34
 CLK_PRESCALER_CPUDIV16	..\stm8s_stdperiph_driver\inc\stm8s_clk.h	189;"	enumerator	enum:__anon34
@@ -763,7 +763,7 @@ DGR	..\stm8s_stdperiph_driver\inc\stm8s.h	2182;"	member	struct:__anon6
 DIO_Clear	..\tm1638\tm1638.c	47;"	macro	file:
 DIO_Input_Mode	..\tm1638\tm1638.c	53;"	macro	file:
 DIO_Output_Mode	..\tm1638\tm1638.c	54;"	macro	file:
-DIO_PIN	..\tm1638\tm1638.h	8;"	macro
+DIO_PIN	..\tm1638\tm1638.h	9;"	macro
 DIO_Set	..\tm1638\tm1638.c	46;"	macro	file:
 DIO_Status	..\tm1638\tm1638.c	55;"	macro	file:
 DISABLE	..\stm8s_stdperiph_driver\inc\stm8s.h	235;"	enumerator	enum:__anon4
@@ -1893,7 +1893,7 @@ SR2	..\stm8s_stdperiph_driver\inc\stm8s.h	833;"	member	struct:TIM2_struct
 SR2	..\stm8s_stdperiph_driver\inc\stm8s.h	957;"	member	struct:TIM3_struct
 SR3	..\stm8s_stdperiph_driver\inc\stm8s.h	1339;"	member	struct:I2C_struct
 STB_Clear	..\tm1638\tm1638.c	51;"	macro	file:
-STB_PIN	..\tm1638\tm1638.h	10;"	macro
+STB_PIN	..\tm1638\tm1638.h	11;"	macro
 STB_Set	..\tm1638\tm1638.c	50;"	macro	file:
 STM8S003K3	c:\program files (x86)\stmicroelectronics\st_toolset\include\stm8s003k3.h	3;"	macro
 STM8S103K	c:\program files (x86)\stmicroelectronics\st_toolset\include\stm8s103k.h	12;"	macro
@@ -2354,7 +2354,7 @@ TIM1_UpdateRequestConfig	..\stm8s_stdperiph_driver\src\stm8s_tim1.c	827;"	functi
 TIM1_UpdateSource_TypeDef	..\stm8s_stdperiph_driver\inc\stm8s_tim1.h	402;"	typedef	typeref:enum:__anon97
 TIM1_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	612;"	struct
 TIM2	..\stm8s_stdperiph_driver\inc\stm8s.h	2681;"	macro
-TIM2Init	..\core\tim2.c	3;"	function
+TIM2Init	..\core\tim2.c	4;"	function
 TIM2Init	..\core\tim2.h	4;"	prototype	signature:(void)
 TIM2_ARRH_ARR	..\stm8s_stdperiph_driver\inc\stm8s.h	932;"	macro
 TIM2_ARRH_RESET_VALUE	..\stm8s_stdperiph_driver\inc\stm8s.h	871;"	macro
@@ -2844,28 +2844,28 @@ TINY	..\stm8s_stdperiph_driver\inc\stm8s.h	124;"	macro
 TINY	..\stm8s_stdperiph_driver\inc\stm8s.h	130;"	macro
 TINY	..\stm8s_stdperiph_driver\inc\stm8s.h	144;"	macro
 TLI_IRQHandler	stm8s_it.h	46;"	prototype	signature:(void)
-TM1638ConvertDisplaySymbol	..\tm1638\tm1638.c	200;"	function	signature:(unsigned char pos, unsigned char symbol)
+TM1638ConvertDisplaySymbol	..\tm1638\tm1638.c	202;"	function	signature:(unsigned char pos, unsigned char symbol)
 TM1638ConvertDisplaySymbol	..\tm1638\tm1638.c	67;"	prototype	file:	signature:(unsigned char pos, unsigned char symbol)
 TM1638DigitToDisplayCodeMap	..\tm1638\tm1638.c	77;"	variable
 TM1638DisplayBuffer	..\tm1638\tm1638.c	91;"	variable
-TM1638EightSymbolDisplay	..\tm1638\tm1638.c	219;"	function	signature:(unsigned char* symbols)
-TM1638EightSymbolDisplay	..\tm1638\tm1638.h	17;"	prototype	signature:(unsigned char* symbols)
+TM1638EightSymbolDisplay	..\tm1638\tm1638.c	221;"	function	signature:(unsigned char* symbols)
+TM1638EightSymbolDisplay	..\tm1638\tm1638.h	18;"	prototype	signature:(unsigned char* symbols)
 TM1638Init	..\tm1638\tm1638.c	180;"	function	signature:(void)
-TM1638Init	..\tm1638\tm1638.h	14;"	prototype	signature:(void)
+TM1638Init	..\tm1638\tm1638.h	15;"	prototype	signature:(void)
 TM1638KeyMap	..\tm1638\tm1638.c	69;"	variable
-TM1638OneSymbolDisplay	..\tm1638\tm1638.c	243;"	function	signature:(unsigned char ledName, unsigned char symbol)
-TM1638OneSymbolDisplay	..\tm1638\tm1638.h	16;"	prototype	signature:(unsigned char ledName, unsigned char symbol)
+TM1638OneSymbolDisplay	..\tm1638\tm1638.c	245;"	function	signature:(unsigned char ledName, unsigned char symbol)
+TM1638OneSymbolDisplay	..\tm1638\tm1638.h	17;"	prototype	signature:(unsigned char ledName, unsigned char symbol)
 TM1638ReadByte	..\tm1638\tm1638.c	108;"	function	signature:(unsigned char* data)
 TM1638ReadByte	..\tm1638\tm1638.c	63;"	prototype	file:	signature:(unsigned char* data)
 TM1638Readkey	..\tm1638\tm1638.c	133;"	function	signature:(unsigned char* keyValue)
-TM1638Readkey	..\tm1638\tm1638.h	13;"	prototype	signature:(unsigned char* keyValue)
-TM1638RefreshDisplayBuffer	..\tm1638\tm1638.c	230;"	function	signature:(void)
+TM1638Readkey	..\tm1638\tm1638.h	14;"	prototype	signature:(unsigned char* keyValue)
+TM1638RefreshDisplayBuffer	..\tm1638\tm1638.c	232;"	function	signature:(void)
 TM1638RefreshDisplayBuffer	..\tm1638\tm1638.c	65;"	prototype	file:	signature:(void)
 TM1638SendCommand	..\tm1638\tm1638.c	126;"	function	signature:(unsigned char cmd)
 TM1638SendCommand	..\tm1638\tm1638.c	64;"	prototype	file:	signature:(unsigned char cmd)
 TM1638WriteByte	..\tm1638\tm1638.c	62;"	prototype	file:	signature:(unsigned char data)
 TM1638WriteByte	..\tm1638\tm1638.c	94;"	function	signature:(unsigned char data)
-TM1638_PORT	..\tm1638\tm1638.h	6;"	macro
+TM1638_PORT	..\tm1638\tm1638.h	7;"	macro
 TPR	..\stm8s_stdperiph_driver\inc\stm8s.h	2179;"	member	struct:__anon6
 TRAP_IRQHandler	stm8s_it.h	45;"	prototype	signature:(void)
 TRISER	..\stm8s_stdperiph_driver\inc\stm8s.h	1343;"	member	struct:I2C_struct
@@ -3237,28 +3237,24 @@ USE_FULL_ASSERT	stm8s_conf.h	93;"	macro
 USE_STDPERIPH_DRIVER	..\stm8s_stdperiph_driver\inc\stm8s.h	96;"	macro
 VECTOR_ID	..\stm8s_stdperiph_driver\inc\stm8s.h	2759;"	macro
 ValBit	..\stm8s_stdperiph_driver\inc\stm8s.h	2798;"	macro
-W1DowCRC8	..\ds18b20\owire.c	128;"	function	signature:(unsigned char* p, unsigned char count)
-W1DowCRC8	..\ds18b20\owire.h	36;"	prototype	signature:(unsigned char* p, unsigned char count)
-W1Init	..\ds18b20\owire.c	83;"	function	signature:(void)
-W1Init	..\ds18b20\owire.h	11;"	prototype	signature:(void)
+W1DowCRC8	..\ds18b20\owire.c	130;"	function	signature:(unsigned char* p, unsigned char count)
+W1DowCRC8	..\ds18b20\owire.h	38;"	prototype	signature:(unsigned char* p, unsigned char count)
+W1Init	..\ds18b20\owire.c	84;"	function	signature:(void)
+W1Init	..\ds18b20\owire.h	13;"	prototype	signature:(void)
 W1ReadBit	..\ds18b20\owire.c	32;"	function	signature:(void)
-W1ReadByte	..\ds18b20\owire.c	103;"	function	signature:(void)
-W1ReadByte	..\ds18b20\owire.h	17;"	prototype	signature:(void)
-W1WriteBit	..\ds18b20\owire.c	55;"	function	signature:(unsigned char bit)
-W1WriteByte	..\ds18b20\owire.c	115;"	function	signature:(unsigned char data)
-W1WriteByte	..\ds18b20\owire.h	26;"	prototype	signature:(unsigned char data)
-W1_BUS_CR1	..\ds18b20\owire.h	42;"	macro
-W1_BUS_CR2	..\ds18b20\owire.h	43;"	macro
-W1_BUS_DDR	..\ds18b20\owire.h	41;"	macro
-W1_BUS_IDR	..\ds18b20\owire.h	40;"	macro
-W1_BUS_INPUT	..\ds18b20\owire.h	47;"	macro
-W1_BUS_ODR	..\ds18b20\owire.h	39;"	macro
-W1_BUS_OUTPUT	..\ds18b20\owire.h	52;"	macro
-W1_BUS_OUT_0	..\ds18b20\owire.h	58;"	macro
-W1_BUS_OUT_1	..\ds18b20\owire.h	57;"	macro
+W1ReadByte	..\ds18b20\owire.c	105;"	function	signature:(void)
+W1ReadByte	..\ds18b20\owire.h	19;"	prototype	signature:(void)
+W1WriteBit	..\ds18b20\owire.c	56;"	function	signature:(unsigned char bit)
+W1WriteByte	..\ds18b20\owire.c	117;"	function	signature:(unsigned char data)
+W1WriteByte	..\ds18b20\owire.h	28;"	prototype	signature:(unsigned char data)
+W1_BUS_INPUT	..\ds18b20\owire.h	45;"	macro
+W1_BUS_OUTPUT	..\ds18b20\owire.h	47;"	macro
+W1_BUS_OUT_0	..\ds18b20\owire.h	49;"	macro
+W1_BUS_OUT_1	..\ds18b20\owire.h	48;"	macro
+W1_BUS_PORT	..\ds18b20\owire.h	41;"	macro
 W1_CRC8_TABLE	..\ds18b20\owire.c	6;"	variable
-W1_PIN	..\ds18b20\owire.h	44;"	macro
-W1_READ_PIN	..\ds18b20\owire.h	60;"	macro
+W1_PIN	..\ds18b20\owire.h	42;"	macro
+W1_READ_PIN	..\ds18b20\owire.h	50;"	macro
 WR	..\stm8s_stdperiph_driver\inc\stm8s.h	1636;"	member	struct:WWDG_struct
 WWDG	..\stm8s_stdperiph_driver\inc\stm8s.h	2652;"	macro
 WWDG_BaseAddress	..\stm8s_stdperiph_driver\inc\stm8s.h	2570;"	macro
@@ -3326,7 +3322,7 @@ __STM8S_WWDG_H	..\stm8s_stdperiph_driver\inc\stm8s_wwdg.h	30;"	macro
 _delay_H_	..\core\delay.h	2;"	macro
 _stext	stm8s_it.h	40;"	prototype	signature:(void)
 _vectab	stm8_interrupt_vector.c	14;"	variable
-assert_failed	main.c	45;"	function	signature:(u8* file, u32 line)
+assert_failed	main.c	42;"	function	signature:(u8* file, u32 line)
 assert_failed	stm8s_conf.h	108;"	prototype	signature:(uint8_t* file, uint32_t line)
 assert_param	stm8s_conf.h	106;"	macro
 assert_param	stm8s_conf.h	110;"	macro

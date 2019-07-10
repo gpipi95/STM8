@@ -72,24 +72,25 @@ void GetDisplayTempTask(void)
                 flip = 2; // convert faild reload counter
             }
         } else {
-            flip        = 2;
-            temperature = DS18B20GetTemp();
-            if (temperature < 0) {
-                temp = 38; // display minus flag
-            } else if (CAST_UC((temperature / 1000) % 10) == 0) {
-                temp = 40; // turn off led
-            } else {
-                temp = CAST_UC((temperature / 1000) % 10);
-            }
-            TM1638OneSymbolDisplay(7, temp);
-            if (temp == 40) {
-                if (CAST_UC((temperature / 100) % 10) != 0) {
-                    temp = CAST_UC((temperature / 100) % 10);
+            flip = 2;
+            if (DS18B20GetTemp(&temperature)) {
+                if (temperature < 0) {
+                    temp = 38; // display minus flag
+                } else if (CAST_UC((temperature / 1000) % 10) == 0) {
+                    temp = 40; // turn off led
+                } else {
+                    temp = CAST_UC((temperature / 1000) % 10);
                 }
+                TM1638OneSymbolDisplay(7, temp);
+                if (temp == 40) {
+                    if (CAST_UC((temperature / 100) % 10) != 0) {
+                        temp = CAST_UC((temperature / 100) % 10);
+                    }
+                }
+                TM1638OneSymbolDisplay(6, temp);
+                TM1638OneSymbolDisplay(5, CAST_UC((temperature / 10) % 10) + 16);
+                TM1638OneSymbolDisplay(4, CAST_UC(temperature % 10));
             }
-            TM1638OneSymbolDisplay(6, temp);
-            TM1638OneSymbolDisplay(5, CAST_UC((temperature / 10) % 10) + 16);
-            TM1638OneSymbolDisplay(4, CAST_UC(temperature % 10));
         }
         TaskRunClear(TEMPERATURE_TASK);
     }

@@ -1,6 +1,7 @@
 #ifndef _DS18B20_H_
 #define _DS18B20_H_
 
+#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 //DS18B20 commands
 // clang-format off
 #define DS18B20_READ_ROM      0x33
@@ -37,7 +38,7 @@ unsigned char DS18B20ReadSCRTPD(void);
 /**
  * @brief get temperature
  *
- * @return 
+ * @return true for valid data, else for invalid data.
  */
-short int DS18B20GetTemp(void);
+bool DS18B20GetTemp(short int* temp);
 #endif /* ifndef _DS18B20_H_ */
