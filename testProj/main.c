@@ -9,6 +9,7 @@
 #include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 #include "../core/TIM2.h"
 #include "../core/delay.h"
+#include "../core/PrintfUtility.h"
 #include "helper.h"
 #include <stdio.h>
 
@@ -23,6 +24,7 @@ void main(void)
     _asm("sim"); //先关闭总中断
     TIM2Init();
     TM1638Init();
+		Printf_Init();
     _asm("rim"); //打开总中断
     printf("Hello world!");
     while (1) {

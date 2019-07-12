@@ -2,6 +2,7 @@
 #include "../DS18B20/DS18B20.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
+#include "../core/PrintfUtility.h"
 #include "../core/atomic.h"
 
 #define NUM_OF_TASK 8
@@ -9,6 +10,7 @@
 #define LED_TASK 6
 #define TEMPERATURE_TASK 7
 
+unsigned int testData = 0;
 typedef struct {
     unsigned char reloadPeriod; // time length of interrupt period
     unsigned char counter;      // timer interrupt couter
@@ -100,6 +102,7 @@ void BlinkPD3LedTask(void)
 {
     if (TaskCanRun(LED_TASK)) {
         //        PD_ODR = PD_ODR ^ 0x08; // LED reverse
+        printf("Data is: %u\n", testData++);
         GPIO_WriteReverse(GPIOD, GPIO_PIN_3);
         TaskRunClear(LED_TASK);
     }
