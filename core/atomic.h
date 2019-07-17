@@ -1,7 +1,7 @@
 #ifndef _ATOMIC_H_
 #define _ATOMIC_H_
 
-#include "../core/STM8S103K3T6C.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 
 extern unsigned char InterruptStateSave;
 #define ATOMIC_BEGIN() InterruptStateSave = GetInterruptState()

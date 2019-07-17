@@ -16,20 +16,20 @@
 ..\stm8s_stdperiph_driver\src\stm8s_uart1.c
 ..\stm8s_stdperiph_driver\src\stm8s_wwdg.c
 ..\core\atomic.c
+..\core\printfutility.c
 ..\core\tim2.c
 ..\ds18b20\ds18b20.c
-..\ds18b20\ds18b20.h
 ..\ds18b20\owire.c
-..\ds18b20\owire.h
 ..\tm1638\tm1638.c
 helper.c
 main.c
 param.c
-param.h
 stm8_interrupt_vector.c
 stm8s_it.c
 ..\core\delay.h
-..\core\stm8s103k3t6c.h
+..\core\printfutility.h
+..\ds18b20\ds18b20.h
+..\ds18b20\owire.h
 ..\stm8s_stdperiph_driver\inc\stm8s.h
 ..\stm8s_stdperiph_driver\inc\stm8s_adc1.h
 ..\stm8s_stdperiph_driver\inc\stm8s_awu.h
@@ -49,14 +49,11 @@ stm8s_it.c
 ..\stm8s_stdperiph_driver\inc\stm8s_uart1.h
 ..\stm8s_stdperiph_driver\inc\stm8s_wwdg.h
 ..\tm1638\tm1638.h
+param.h
 stm8s_conf.h
 stm8s_it.h
 ..\core\atomic.h
-..\core\tim2.h
 ..\core\utility.h
 c:\program files (x86)\cosmic\cxstm8_eval\hstm8\mods0.h
 c:\program files (x86)\cosmic\cxstm8_eval\hstm8\stdio.h
-c:\program files (x86)\stmicroelectronics\st_toolset\include\stm8s003k3.h
-c:\program files (x86)\stmicroelectronics\st_toolset\include\stm8s103k.h
-c:\program files (x86)\stmicroelectronics\st_toolset\include\stm8s103k3.h
 helper.h

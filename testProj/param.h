@@ -9,5 +9,6 @@ bool          WritePID(float kp, float ki, float kd);      // 3*4=12 byte
 bool          WriteSetTemperature(unsigned char setpoint); // 1*1=4 byte
 bool          ReadPID(float* kp, float* ki, float* kd);
 unsigned char ReadSetTemperature(void);
+uint16_t test(void);
 
 #endif

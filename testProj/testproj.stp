@@ -459,11 +459,6 @@ Next=Root.Source Files...\core\printfutility.c
 [Root.Source Files...\core\printfutility.c]
 ElemType=File
 PathName=..\core\printfutility.c
-Next=Root.Source Files...\core\printfutility.h
-
-[Root.Source Files...\core\printfutility.h]
-ElemType=File
-PathName=..\core\printfutility.h
 Next=Root.Source Files...\core\tim2.c
 
 [Root.Source Files...\core\tim2.c]
@@ -474,21 +469,11 @@ Next=Root.Source Files...\ds18b20\ds18b20.c
 [Root.Source Files...\ds18b20\ds18b20.c]
 ElemType=File
 PathName=..\ds18b20\ds18b20.c
-Next=Root.Source Files...\ds18b20\ds18b20.h
-
-[Root.Source Files...\ds18b20\ds18b20.h]
-ElemType=File
-PathName=..\ds18b20\ds18b20.h
 Next=Root.Source Files...\ds18b20\owire.c
 
 [Root.Source Files...\ds18b20\owire.c]
 ElemType=File
 PathName=..\ds18b20\owire.c
-Next=Root.Source Files...\ds18b20\owire.h
-
-[Root.Source Files...\ds18b20\owire.h]
-ElemType=File
-PathName=..\ds18b20\owire.h
 Next=Root.Source Files...\tm1638\tm1638.c
 
 [Root.Source Files...\tm1638\tm1638.c]
@@ -509,11 +494,6 @@ Next=Root.Source Files.param.c
 [Root.Source Files.param.c]
 ElemType=File
 PathName=param.c
-Next=Root.Source Files.param.h
-
-[Root.Source Files.param.h]
-ElemType=File
-PathName=param.h
 Next=Root.Source Files.stm8_interrupt_vector.c
 
 [Root.Source Files.stm8_interrupt_vector.c]
@@ -601,11 +581,21 @@ String.6.0=2019,5,28,20,55,13
 [Root.Include Files...\core\delay.h]
 ElemType=File
 PathName=..\core\delay.h
-Next=Root.Include Files...\core\stm8s103k3t6c.h
+Next=Root.Include Files...\core\printfutility.h
 
-[Root.Include Files...\core\stm8s103k3t6c.h]
+[Root.Include Files...\core\printfutility.h]
 ElemType=File
-PathName=..\core\stm8s103k3t6c.h
+PathName=..\core\printfutility.h
+Next=Root.Include Files...\ds18b20\ds18b20.h
+
+[Root.Include Files...\ds18b20\ds18b20.h]
+ElemType=File
+PathName=..\ds18b20\ds18b20.h
+Next=Root.Include Files...\ds18b20\owire.h
+
+[Root.Include Files...\ds18b20\owire.h]
+ElemType=File
+PathName=..\ds18b20\owire.h
 Next=Root.Include Files...\stm8s_stdperiph_driver\inc\stm8s.h
 
 [Root.Include Files...\stm8s_stdperiph_driver\inc\stm8s.h]
@@ -701,6 +691,11 @@ Next=Root.Include Files...\tm1638\tm1638.h
 [Root.Include Files...\tm1638\tm1638.h]
 ElemType=File
 PathName=..\tm1638\tm1638.h
+Next=Root.Include Files.param.h
+
+[Root.Include Files.param.h]
+ElemType=File
+PathName=param.h
 Next=Root.Include Files.stm8s_conf.h
 
 [Root.Include Files.stm8s_conf.h]

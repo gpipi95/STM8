@@ -5,7 +5,6 @@
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_clk.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
-//#include "../core/STM8S103K3T6C.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 #include "../core/TIM2.h"
 #include "../core/delay.h"
@@ -26,7 +25,7 @@ void main(void)
     TM1638Init();
 		Printf_Init();
     _asm("rim"); //打开总中断
-    printf("Hello world!");
+
     while (1) {
         BlinkPD3LedTask();
         ReadKeyboardTask();

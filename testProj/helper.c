@@ -4,6 +4,7 @@
 #include "../TM1638/TM1638.h"
 #include "../core/PrintfUtility.h"
 #include "../core/atomic.h"
+#include "param.h"
 
 #define NUM_OF_TASK 8
 #define KEYBOARD_TASK 1
@@ -101,8 +102,6 @@ void GetDisplayTempTask(void)
 void BlinkPD3LedTask(void)
 {
     if (TaskCanRun(LED_TASK)) {
-        //        PD_ODR = PD_ODR ^ 0x08; // LED reverse
-        printf("Data is: %u\n", testData++);
         GPIO_WriteReverse(GPIOD, GPIO_PIN_3);
         TaskRunClear(LED_TASK);
     }
@@ -110,24 +109,46 @@ void BlinkPD3LedTask(void)
 
 void ReadKeyboardTask(void)
 {
-    unsigned char keyValue;
+    static unsigned char lastKey = 0xFF; // initial no key pressed 0xFF
+
+    unsigned char keyValue, dispChar;
+
+    uint16_t data = 0x00;
+
     if (TaskCanRun(KEYBOARD_TASK)) {
         TM1638Readkey(&keyValue);
-        if (keyValue != 0xFF) {
-            if (keyValue < 10) {
-                TM1638OneSymbolDisplay(0, keyValue);
-                switch (keyValue) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-                default:
-                    break;
-                }
-            } else if (keyValue < 20) {
-                TM1638OneSymbolDisplay(1, keyValue - 10);
+        if (keyValue != lastKey) { // key state changed
+            if (keyValue == 0xFF)  // key released event, last key is lastKey
+            {
+
+            } else { // new key pressed event, new key is keyValue
             }
+            lastKey = keyValue; // update lastKey
+
+        } else if (keyValue == 0xFF) { // no key pressed, should do nothing
+        } else {                       // key pressed and not released
         }
-        TaskRunClear(KEYBOARD_TASK);
+
+        if (keyValue < 10) {
+            TM1638OneSymbolDisplay(0, keyValue);
+            switch (keyValue) {
+            case 1:
+                putchar(keyValue);
+                data     = test();
+                dispChar = 0x00FF & data;
+                putchar(dispChar);
+                dispChar = (0xFF00 & data) >> 8;
+                putchar(dispChar);
+                break;
+            case 2:
+                break;
+            default:
+                break;
+            }
+        } else if (keyValue < 20) {
+            TM1638OneSymbolDisplay(1, keyValue - 10);
+        }
     }
+    TaskRunClear(KEYBOARD_TASK);
+}
 }

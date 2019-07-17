@@ -1,5 +1,4 @@
 #include "DS18B20.h"
-//#include "../core/STM8S103K3T6C.h"
 #include "../core/delay.h"
 #include "owire.h"
 

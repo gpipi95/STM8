@@ -1,24 +1,12 @@
 #include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 
-typedef enum { FAILED = 0,
-               PASSED = !FAILED } TestStatus;
-__IO TestStatus OperationStatus;
-/**
-  * @brief How to Read / Write / Erase one Byte on FLASH memory.
-  * @par   Examples description
-  *        - Read one byte at address 0x40A5
-  *        - Write its complement value at address + 1
-  *        - Check programed value
-  *        - Erase 2 byte (address 40A5 & 40A6)
-  *        - Check the 2 bytes value is 0x00.
-  * @param  None
-  * @retval None
-  */
-float test(void)
+
+uint16_t test(void)
 {
 
     uint8_t  val = 0x00, val_comp = 0x00;
     uint32_t add = 0x00;
+		uint16_t data = 0x00;
 
     /* Define FLASH programming time */
     FLASH_SetProgrammingTime(FLASH_PROGRAMTIME_STANDARD);
@@ -38,9 +26,7 @@ float test(void)
     val = FLASH_ReadByte((add + 1));
     if (val != val_comp) {
         /* Error */
-        OperationStatus = FAILED;
-        /* OperationStatus = PASSED, if the data written/read to/from DATA EEPROM memory is correct */
-        /* OperationStatus = FAILED, if the data written/read to/from DATA EEPROM memory is corrupted */
+        data |= 0xFF00;
     }
 
     /* Erase byte at a specified address & address + 1 */
@@ -51,8 +37,7 @@ float test(void)
     val_comp = FLASH_ReadByte((add + 1));
     if ((val != 0x00) & (val_comp != 0x00)) {
         /* Error */
-        OperationStatus = FAILED;
-        /* OperationStatus = PASSED, if the data written/read to/from DATA EEPROM memory is correct */
-        /* OperationStatus = FAILED, if the data written/read to/from DATA EEPROM memory is corrupted */
+        data |= 0x00FF;
     }
+		return data;
 }

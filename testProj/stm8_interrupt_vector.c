@@ -1,7 +1,7 @@
 /*	BASIC INTERRUPT VECTOR TABLE FOR STM8 devices
  *	Copyright (c) 2007 STMicroelectronics
  */
-#include "STM8S103K3.h"
+
 #include "helper.h"
 #include "stm8s_it.h"
 
