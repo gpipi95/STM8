@@ -1,13 +1,24 @@
 #include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 
-
-uint16_t test(void)
+bool WritePID(float kp, float ki, float kd)
 {
+    return TRUE;
+}
+bool ReadPID(float* kp, float* ki, float* kd)
+{
+    return TRUE;
+}
+unsigned char ReadSetTemperature(void)
+{
+    return 0;
+}
 
-    uint8_t  val = 0x00, val_comp = 0x00;
-    uint32_t add = 0x00;
-		uint16_t data = 0x00;
-
+bool WriteSetTemperature(unsigned char setpoint)
+{
+    return TRUE;
+}
+bool ParamInit(void)
+{
     /* Define FLASH programming time */
     FLASH_SetProgrammingTime(FLASH_PROGRAMTIME_STANDARD);
 
@@ -39,5 +50,4 @@ uint16_t test(void)
         /* Error */
         data |= 0x00FF;
     }
-		return data;
 }
