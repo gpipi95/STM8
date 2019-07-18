@@ -109,46 +109,62 @@ void BlinkPD3LedTask(void)
 
 void ReadKeyboardTask(void)
 {
-    static unsigned char lastKey = 0xFF; // initial no key pressed 0xFF
+    static unsigned char lastKey             = 0xFF; // initial no key pressed 0xFF
+    static unsigned char longPressCounter    = 0;    // long press first triger counter
+    static unsigned char longPressSubCounter = 0;    // sub counter for quick triger of long press
+    static unsigned char longPressMode       = 0;    // 0: not in long press mode, !0: in long press mode
 
-    unsigned char keyValue, dispChar;
+    const unsigned char longPressTime = 200; // period of this task T*100 = 9.6*200 ms
+    const unsigned char trigerPeriod  = 10;  // trigerPeriod 10*9.6 ms
 
-    uint16_t data = 0x00;
+    unsigned char keyValue = 0xFF;
 
     if (TaskCanRun(KEYBOARD_TASK)) {
         TM1638Readkey(&keyValue);
         if (keyValue != lastKey) { // key state changed
             if (keyValue == 0xFF)  // key released event, last key is lastKey
             {
-
-            } else { // new key pressed event, new key is keyValue
-            }
-            lastKey = keyValue; // update lastKey
-
-        } else if (keyValue == 0xFF) { // no key pressed, should do nothing
-        } else {                       // key pressed and not released
-        }
-
-        if (keyValue < 10) {
-            TM1638OneSymbolDisplay(0, keyValue);
-            switch (keyValue) {
-            case 1:
+                putchar(lastKey);
+                putchar(0xAA);
+                putchar(0xAA);
+                putchar(0xAA);
+                putchar(0x01); // 1 for release event
+            } else {           // new key pressed event, new key is keyValue
                 putchar(keyValue);
-                data     = test();
-                dispChar = 0x00FF & data;
-                putchar(dispChar);
-                dispChar = (0xFF00 & data) >> 8;
-                putchar(dispChar);
-                break;
-            case 2:
-                break;
-            default:
-                break;
+                putchar(0xAA);
+                putchar(0xAA);
+                putchar(0xAA);
+                putchar(0x02); // 2 for pressed down event
             }
-        } else if (keyValue < 20) {
-            TM1638OneSymbolDisplay(1, keyValue - 10);
+            lastKey             = keyValue; // update lastKey
+            longPressCounter    = 0;
+            longPressSubCounter = 0;
+            longPressMode       = 0;
+        } else if (keyValue == 0xFF) { // no key pressed, should do nothing
+        } else {                       // key pressed and not released, key is keyValue
+            if (!longPressMode) {
+                if (longPressCounter++ > longPressTime) {
+                    longPressMode       = 1;
+                    longPressSubCounter = 0;
+                    // triger the first long press event
+                    putchar(keyValue);
+                    putchar(0xAA);
+                    putchar(0xAA);
+                    putchar(0xAA);
+                    putchar(0x03); // 3 for long press first trigered
+                }
+            } else {
+                if (longPressSubCounter++ > trigerPeriod) {
+                    longPressSubCounter = 0;
+                    putchar(keyValue);
+                    putchar(0xBB);
+                    putchar(0xBB);
+                    putchar(0xBB);
+                    putchar(0x04); // 3 for long press first trigered
+                    // triger next time long press event
+                }
+            }
         }
     }
     TaskRunClear(KEYBOARD_TASK);
-}
 }
