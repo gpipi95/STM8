@@ -1653,6 +1653,7 @@ NOPT3	..\stm8s_stdperiph_driver\inc\stm8s.h	1592;"	member	struct:OPT_struct
 NOPT4	..\stm8s_stdperiph_driver\inc\stm8s.h	1594;"	member	struct:OPT_struct
 NOPT5	..\stm8s_stdperiph_driver\inc\stm8s.h	1596;"	member	struct:OPT_struct
 NOPT7	..\stm8s_stdperiph_driver\inc\stm8s.h	1600;"	member	struct:OPT_struct
+NO_KEY_PRESSED	helper.c	13;"	macro	file:
 NULL	c:\program files (x86)\cosmic\cxstm8_eval\hstm8\stdio.h	30;"	macro
 NUM_OF_TASK	helper.c	9;"	macro	file:
 NonHandledInterrupt	stm8s_it.h	41;"	prototype	signature:(void)
@@ -1743,8 +1744,10 @@ RST_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	1671;"	struct
 RXCRCR	..\stm8s_stdperiph_driver\inc\stm8s.h	1704;"	member	struct:SPI_struct
 ReadKeyboardTask	helper.c	110;"	function	signature:(void)
 ReadKeyboardTask	helper.h	27;"	prototype	signature:(void)
+ReadPID	param.c	48;"	function	signature:(float* kp, float* ki, float* kd)
 ReadPID	param.h	10;"	prototype	signature:(float* kp, float* ki, float* kd)
-ReadSetTemperature	param.h	11;"	prototype	signature:(void)
+ReadTemperatureSetpoin	param.c	55;"	function	signature:(void)
+ReadTemperatureSetpoin	param.h	11;"	prototype	signature:(void)
 Reserved1	..\stm8s_stdperiph_driver\inc\stm8s.h	2299;"	member	struct:__anon6::__anon7::__anon13
 Reserved2	..\stm8s_stdperiph_driver\inc\stm8s.h	2305;"	member	struct:__anon6::__anon7::__anon13
 RxFIFO	..\stm8s_stdperiph_driver\inc\stm8s.h	2326;"	member	union:__anon6::__anon7	typeref:struct:__anon6::__anon7::__anon14
@@ -1900,6 +1903,8 @@ SR2	..\stm8s_stdperiph_driver\inc\stm8s.h	620;"	member	struct:TIM1_struct
 SR2	..\stm8s_stdperiph_driver\inc\stm8s.h	833;"	member	struct:TIM2_struct
 SR2	..\stm8s_stdperiph_driver\inc\stm8s.h	957;"	member	struct:TIM3_struct
 SR3	..\stm8s_stdperiph_driver\inc\stm8s.h	1339;"	member	struct:I2C_struct
+START_OF_PID	param.c	3;"	macro	file:
+START_OF_TEMPERATURE	param.c	4;"	macro	file:
 STB_Clear	..\tm1638\tm1638.c	51;"	macro	file:
 STB_PIN	..\tm1638\tm1638.h	11;"	macro
 STB_Set	..\tm1638\tm1638.c	50;"	macro	file:
@@ -3281,7 +3286,9 @@ WWDG_WR_MSB	..\stm8s_stdperiph_driver\inc\stm8s.h	1659;"	macro
 WWDG_WR_RESET_VALUE	..\stm8s_stdperiph_driver\inc\stm8s.h	1645;"	macro
 WWDG_WR_W	..\stm8s_stdperiph_driver\inc\stm8s.h	1660;"	macro
 WWDG_struct	..\stm8s_stdperiph_driver\inc\stm8s.h	1633;"	struct
+WritePID	param.c	40;"	function	signature:(float kp, float ki, float kd)
 WritePID	param.h	8;"	prototype	signature:(float kp, float ki, float kd)
+WriteSetTemperature	param.c	61;"	function	signature:(unsigned char setpoint)
 WriteSetTemperature	param.h	9;"	prototype	signature:(unsigned char setpoint)
 _ATOMIC_H_	..\core\atomic.h	2;"	macro
 _COSMIC_	..\stm8s_stdperiph_driver\inc\stm8s.h	83;"	macro
@@ -3325,8 +3332,11 @@ __STM8S_TIM4_H	..\stm8s_stdperiph_driver\inc\stm8s_tim4.h	30;"	macro
 __STM8S_UART1_H	..\stm8s_stdperiph_driver\inc\stm8s_uart1.h	30;"	macro
 __STM8S_WWDG_H	..\stm8s_stdperiph_driver\inc\stm8s_wwdg.h	30;"	macro
 _delay_H_	..\core\delay.h	2;"	macro
+_readFloat	param.c	27;"	function	signature:(uint16_t address)
+_startReadWrite	param.c	6;"	function	signature:(void)
 _stext	stm8s_it.h	40;"	prototype	signature:(void)
 _vectab	stm8_interrupt_vector.c	14;"	variable
+_writeFloat	param.c	12;"	function	signature:(float data, uint16_t address)
 assert_failed	main.c	49;"	function	signature:(u8* file, u32 line)
 assert_failed	stm8s_conf.h	108;"	prototype	signature:(uint8_t* file, uint32_t line)
 assert_param	stm8s_conf.h	106;"	macro
@@ -3400,9 +3410,6 @@ sim	..\stm8s_stdperiph_driver\inc\stm8s.h	2738;"	macro
 size_t	c:\program files (x86)\cosmic\cxstm8_eval\hstm8\stdio.h	10;"	typedef
 sprintf	c:\program files (x86)\cosmic\cxstm8_eval\hstm8\stdio.h	22;"	prototype	signature:(char *s, char *format, ...)
 sscanf	c:\program files (x86)\cosmic\cxstm8_eval\hstm8\stdio.h	21;"	prototype	signature:(char *s, char *format, ...)
-test	param.c	4;"	function	signature:(void)
-test	param.h	12;"	prototype	signature:(void)
-testData	helper.c	14;"	variable
 trap	..\stm8s_stdperiph_driver\inc\stm8s.h	2721;"	macro
 trap	..\stm8s_stdperiph_driver\inc\stm8s.h	2730;"	macro
 trap	..\stm8s_stdperiph_driver\inc\stm8s.h	2740;"	macro

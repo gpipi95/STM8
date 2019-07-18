@@ -180,7 +180,7 @@ void TM1638Readkey(unsigned char* keyValue)
 void TM1638Init(void)
 {
     // init displ data
-    unsigned char displayData[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+    unsigned char displayData[] = { 0, 0, 40, 40, 40, 40, 40, 40 };
     // init IO state
     //    SET_BIT8(TM1638_PORT->DDR, DIO_PIN); // PA1-4 set to output
     //    SET_BIT8(TM1638_PORT->DDR, CLK_PIN); // PA1-4 set to output

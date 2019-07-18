@@ -372,10 +372,10 @@ BarID=59392
 YPos=30
 Docking=True
 MRUDockID=0
-MRUDockLeftPos=8
-MRUDockTopPos=31
-MRUDockRightPos=156
-MRUDockBottomPos=61
+MRUDockLeftPos=-1
+MRUDockTopPos=30
+MRUDockRightPos=147
+MRUDockBottomPos=60
 MRUFloatStyle=8196
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -407,15 +407,15 @@ Buttons=AABOAAAAAAGPDBAAAAAAAIIBAAAAAAAAAAAAAAAADABOAAAAAAAAAAAAAAAAHABOAAAAAA
 
 [WorkState_v1_2.DockState.Bar-10]
 BarID=59396
-XPos=157
+XPos=147
 YPos=30
 MRUWidth=566
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=157
-MRUDockTopPos=31
-MRUDockRightPos=740
-MRUDockBottomPos=61
+MRUDockLeftPos=147
+MRUDockTopPos=30
+MRUDockRightPos=730
+MRUDockBottomPos=60
 MRUFloatStyle=8196
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -530,9 +530,9 @@ YPos=60
 MRUWidth=385
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=8
+MRUDockLeftPos=-1
 MRUDockTopPos=60
-MRUDockRightPos=410
+MRUDockRightPos=401
 MRUDockBottomPos=90
 MRUFloatStyle=8196
 MRUFloatXPos=-1
@@ -565,15 +565,15 @@ Buttons=HKAIAAAAAAIKAIAAAAAAAAAAAAAAAAADKBAAAAAAAAAAAAAAAAGPKBAAAAAAEPKBAAAAAAFP
 
 [WorkState_v1_2.DockState.Bar-14]
 BarID=59400
-XPos=740
+XPos=730
 YPos=30
 MRUWidth=23
 Docking=True
 MRUDockID=59419
-MRUDockLeftPos=740
-MRUDockTopPos=31
-MRUDockRightPos=780
-MRUDockBottomPos=61
+MRUDockLeftPos=730
+MRUDockTopPos=30
+MRUDockRightPos=770
+MRUDockBottomPos=60
 MRUFloatStyle=8196
 MRUFloatXPos=-1
 MRUFloatYPos=0
@@ -1314,7 +1314,7 @@ ptn_Child1=MainFrame
 ptn_Child2=ChildFrames
 
 [WorkState_v1_2.Frames.MainFrame]
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAAADIPPPPAADIPPPPPPPPPPPPPPPPPPPPHPAAAAAAEFAAAAAANOEAAAAAJFDAAAAA
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPHPAAAAAAJDAAAAAANOEAAAAAODDAAAAA
 Title=ST Visual Develop - STM8.stw - [helper.c]
 
 [WorkState_v1_2.Frames.ChildFrames]
@@ -1322,6 +1322,7 @@ ptn_Child1=Document-0
 ptn_Child2=Document-1
 ptn_Child3=Document-2
 ptn_Child4=Document-3
+ptn_Child5=Document-4
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
@@ -1364,5 +1365,16 @@ DocPathName=testproj\param.h
 DocumentString=
 DocTemplateIndex=0
 WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPCIAAAAAACIAAAAAANJEAAAAANMBAAAAA
+IsActiveChildFrame=False
+IsFrameVisible=True
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4]
+ptn_Child1=ViewFrame-0
+
+[WorkState_v1_2.Frames.ChildFrames.Document-4.ViewFrame-0]
+DocPathName=stm8s_stdperiph_driver\src\stm8s_clk.c
+DocumentString=
+DocTemplateIndex=0
+WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPIGAAAAAAIGAAAAAADIEAAAAADLBAAAAA
 IsActiveChildFrame=False
 IsFrameVisible=True

@@ -16,9 +16,10 @@ void main(void)
 {
     GPIO_Init(GPIOD, (GPIO_Pin_TypeDef)(GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
     // HSI selected as master clock source (reset value),16 MHz
-    // fHSI= fHSI RC output/2 = 8MHz
+    // fHSI= fHSI RC output/2 = 8MHz, Warning: not like this!!!
     CLK_DeInit();
-    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV2);
+		CLK_ClockSwitchConfig(CLK_SWITCHMODE_AUTO, CLK_SOURCE_HSI, DISABLE, CLK_CURRENTCLOCKSTATE_DISABLE);
+    CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
 
     _asm("sim"); //先关闭总中断
     TIM2Init();

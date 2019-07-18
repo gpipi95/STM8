@@ -1,53 +1,84 @@
+#include "param.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
+
+#define START_OF_PID 0x4000
+#define START_OF_TEMPERATURE 0x400C
+
+void _startReadWrite(void)
+{
+    FLASH_SetProgrammingTime(FLASH_PROGRAMTIME_STANDARD);
+    FLASH_Unlock(FLASH_MEMTYPE_DATA);
+}
+
+bool _writeFloat(float data, uint16_t address)
+{
+    unsigned char* unsignedChar_ptr = (unsigned char*)&data;
+    unsigned char  i, value;
+    bool           result = TRUE;
+
+    _startReadWrite();
+    for (i = 0; i < sizeof(float); ++i) {
+        FLASH_ProgramByte((address + i), *(unsignedChar_ptr + i));
+        value  = FLASH_ReadByte(address + i);
+        result = result && (value == *(unsignedChar_ptr + i));
+    }
+    return result;
+}
+
+float _readFloat(uint16_t address)
+{
+    float          data;
+    unsigned char  i;
+    unsigned char* unsignedChar_ptr = (unsigned char*)&data;
+    _startReadWrite();
+
+    for (i = 0; i < sizeof(float); ++i) {
+        *(unsignedChar_ptr + i) = FLASH_ReadByte(address + i);
+    }
+    return data;
+}
 
 bool WritePID(float kp, float ki, float kd)
 {
-    return TRUE;
-}
-bool ReadPID(float* kp, float* ki, float* kd)
-{
-    return TRUE;
-}
-unsigned char ReadSetTemperature(void)
-{
-    return 0;
+    bool result = _writeFloat(kp, START_OF_PID);
+    result      = result && _writeFloat(ki, START_OF_PID + sizeof(float));
+    result      = result && _writeFloat(kd, START_OF_PID + 2 * sizeof(float));
+    return result;
 }
 
-bool WriteSetTemperature(unsigned char setpoint)
+void ReadPID(float* kp, float* ki, float* kd)
 {
-    return TRUE;
+    *kp = _readFloat(START_OF_PID);
+    *ki = _readFloat(START_OF_PID + sizeof(float));
+    *kd = _readFloat(START_OF_PID + 2 * sizeof(float));
 }
-bool ParamInit(void)
+
+unsigned char ReadTemperatureSetpoint(void)
 {
-    /* Define FLASH programming time */
-    FLASH_SetProgrammingTime(FLASH_PROGRAMTIME_STANDARD);
+    unsigned char value;
+    _startReadWrite();
+    value = FLASH_ReadByte(START_OF_TEMPERATURE);
+    // value valid check
+    if (value > MAX_TEMPERATURE) {
+        value = MAX_TEMPERATURE;
+    } else if (value < MIN_TEMPERATURE) {
+        value = MIN_TEMPERATURE;
+    }
+    return value;
+}
 
-    /* Unlock Data memory */
-    FLASH_Unlock(FLASH_MEMTYPE_DATA);
-
-    /* Read a byte at a specified address */
-    add = 0x40A5;
-    val = FLASH_ReadByte(add);
-
-    /* Program complement value (of previous read byte) at previous address + 1 */
-    val_comp = (uint8_t)(~val);
-    FLASH_ProgramByte((add + 1), val_comp);
-
-    /* Check program action */
-    val = FLASH_ReadByte((add + 1));
-    if (val != val_comp) {
-        /* Error */
-        data |= 0xFF00;
+bool WriteTemperatureSetpoint(unsigned char setpoint)
+{
+    unsigned char value;
+    _startReadWrite();
+    // value valid check
+    if (setpoint > MAX_TEMPERATURE) {
+        setpoint = MAX_TEMPERATURE;
+    } else if (setpoint < MIN_TEMPERATURE) {
+        setpoint = MIN_TEMPERATURE;
     }
 
-    /* Erase byte at a specified address & address + 1 */
-    FLASH_EraseByte(add);
-    FLASH_EraseByte((add + 1));
-    /* Erase action */
-    val      = FLASH_ReadByte(add);
-    val_comp = FLASH_ReadByte((add + 1));
-    if ((val != 0x00) & (val_comp != 0x00)) {
-        /* Error */
-        data |= 0x00FF;
-    }
+    FLASH_ProgramByte(START_OF_TEMPERATURE, setpoint);
+    value = FLASH_ReadByte(START_OF_TEMPERATURE);
+    return value == setpoint;
 }
