@@ -31,4 +31,6 @@ void ReadKeyboardTask(void);
  * @param taskNum task number
  */
 void TaskRunClear(unsigned char taskNum);
+void DisplayTemperature(unsigned char temperature);
+void DisplayFanSpeed(void);
 #endif

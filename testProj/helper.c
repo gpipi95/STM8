@@ -12,6 +12,11 @@
 #define TEMPERATURE_TASK 7
 #define NO_KEY_PRESSED 0xFF
 
+#define FAN_SPEED_AUTO 0
+#define FAN_SPEED_LOW 1
+#define FAN_SPEED_MIDDLE 2
+#define FAN_SPEED_HIGH 3
+
 typedef struct {
     unsigned char reloadPeriod; // time length of interrupt period
     unsigned char counter;      // timer interrupt couter
@@ -31,6 +36,9 @@ Task_t TaskData[NUM_OF_TASK] = {
     { 208, 208, 0 }  // 998.4ms for temperature read and display
     // clang-format on
 };
+
+static unsigned char FanSpeedMode = FAN_SPEED_AUTO; // fan speed mode automatic
+
 void TimeInterruptWork(void)
 {
     unsigned char i;
@@ -107,6 +115,44 @@ void BlinkPD3LedTask(void)
     }
 }
 
+void DisplayTemperature(unsigned char temperature)
+{
+    TM1638OneSymbolDisplay(1, temperature / 10);
+    TM1638OneSymbolDisplay(0, temperature % 10);
+}
+
+void DisplayFanSpeed(void)
+{
+    TM1638OneSymbolDisplay(2, FanSpeedMode);
+}
+
+static void IncreaseTemperatureSetpoint(char step)
+{
+    WriteTemperatureSetpoint(ReadTemperatureSetpoint() + step);
+    DisplayTemperature(ReadTemperatureSetpoint());
+}
+
+static void ChangeFanMode(void)
+{
+    switch (FanSpeedMode) {
+    case FAN_SPEED_AUTO:
+        FanSpeedMode = FAN_SPEED_LOW;
+        break;
+    case FAN_SPEED_LOW:
+        FanSpeedMode = FAN_SPEED_MIDDLE;
+        break;
+    case FAN_SPEED_MIDDLE:
+        FanSpeedMode = FAN_SPEED_HIGH;
+        break;
+    case FAN_SPEED_HIGH:
+        FanSpeedMode = FAN_SPEED_AUTO;
+        break;
+    default:
+        break;
+    }
+    DisplayFanSpeed();
+}
+
 void ReadKeyboardTask(void)
 {
     static unsigned char lastKey             = NO_KEY_PRESSED;
@@ -118,7 +164,6 @@ void ReadKeyboardTask(void)
     const unsigned char trigerPeriod  = 10;  // trigerPeriod 10*9.6 ms
 
     unsigned char keyValue = NO_KEY_PRESSED;
-    unsigned char temperature;
 
     if (TaskCanRun(KEYBOARD_TASK)) {
         TM1638Readkey(&keyValue);
@@ -131,17 +176,13 @@ void ReadKeyboardTask(void)
                 putchar(0x01); // 1 for release event
                 switch (lastKey) {
                 case 0x01:
-                    WriteTemperatureSetpoint(ReadTemperatureSetpoint() + 1);
-                    temperature = ReadTemperatureSetpoint();
-
-                    TM1638OneSymbolDisplay(1, temperature / 10);
-                    TM1638OneSymbolDisplay(0, temperature % 10);
+                    IncreaseTemperatureSetpoint(1);
                     break;
                 case 0x05:
-                    WriteTemperatureSetpoint(ReadTemperatureSetpoint() - 1);
-                    temperature = ReadTemperatureSetpoint();
-                    TM1638OneSymbolDisplay(1, temperature / 10);
-                    TM1638OneSymbolDisplay(0, temperature % 10);
+                    IncreaseTemperatureSetpoint(-1);
+                    break;
+                case 0x02:
+                    ChangeFanMode();
                     break;
                 default:
                     break;

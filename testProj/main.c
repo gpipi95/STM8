@@ -2,14 +2,15 @@
  *  test
  *--------------------------------------------------------*/
 //#include "../PID/PID_v1.h"
+#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_clk.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
-#include "../STM8S_StdPeriph_Driver/inc/stm8s.h"
+#include "../core/PrintfUtility.h"
 #include "../core/TIM2.h"
 #include "../core/delay.h"
-#include "../core/PrintfUtility.h"
 #include "helper.h"
+#include "param.h"
 #include <stdio.h>
 
 void main(void)
@@ -18,15 +19,16 @@ void main(void)
     // HSI selected as master clock source (reset value),16 MHz
     // fHSI= fHSI RC output/2 = 8MHz, Warning: not like this!!!
     CLK_DeInit();
-		CLK_ClockSwitchConfig(CLK_SWITCHMODE_AUTO, CLK_SOURCE_HSI, DISABLE, CLK_CURRENTCLOCKSTATE_DISABLE);
+    CLK_ClockSwitchConfig(CLK_SWITCHMODE_AUTO, CLK_SOURCE_HSI, DISABLE, CLK_CURRENTCLOCKSTATE_DISABLE);
     CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);
 
     _asm("sim"); //先关闭总中断
     TIM2Init();
     TM1638Init();
-		Printf_Init();
+    Printf_Init();
     _asm("rim"); //打开总中断
-
+    DisplayTemperature(ReadTemperatureSetpoint());
+    DisplayFanSpeed();
     while (1) {
         BlinkPD3LedTask();
         ReadKeyboardTask();
