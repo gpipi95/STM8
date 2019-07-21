@@ -9,8 +9,10 @@
 #include "../core/PrintfUtility.h"
 #include "../core/TIM2.h"
 #include "../core/delay.h"
-#include "helper.h"
+#include "Control.h"
+#include "Display.h"
 #include "param.h"
+#include "task.h"
 #include <stdio.h>
 
 void main(void)
@@ -27,12 +29,12 @@ void main(void)
     TM1638Init();
     Printf_Init();
     _asm("rim"); //打开总中断
-    DisplayTemperature(ReadTemperatureSetpoint());
-    DisplayFanSpeed();
+    DisplayTemperatureSetpoint(ReadTemperatureSetpoint());
+    DisplayFanSpeedMode(GetFanSpeedMode());
     while (1) {
         BlinkPD3LedTask();
         ReadKeyboardTask();
-        GetDisplayTempTask();
+        TemperatureTask();
     }
 }
 //putchar copies c to the user specified output stream.

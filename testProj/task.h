@@ -1,10 +1,10 @@
-#ifndef _HELPER_H_
-#define _HELPER_H_
+#ifndef _TASK_H_
+#define _TASK_H_
 
 /**
  * @brief call this function the first time to start convert temp, next time to read temperature
  */
-void GetDisplayTempTask(void);
+void TemperatureTask(void);
 /**
  * @brief Only time interrupt can invoke this function, see the code for detail
  */
@@ -31,6 +31,4 @@ void ReadKeyboardTask(void);
  * @param taskNum task number
  */
 void TaskRunClear(unsigned char taskNum);
-void DisplayTemperature(unsigned char temperature);
-void DisplayFanSpeed(void);
 #endif

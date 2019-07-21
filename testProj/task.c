@@ -1,9 +1,11 @@
-#include "helper.h"
+#include "task.h"
 #include "../DS18B20/DS18B20.h"
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../TM1638/TM1638.h"
 #include "../core/PrintfUtility.h"
 #include "../core/atomic.h"
+#include "Control.h"
+#include "Display.h"
 #include "param.h"
 
 #define NUM_OF_TASK 8
@@ -11,11 +13,6 @@
 #define LED_TASK 6
 #define TEMPERATURE_TASK 7
 #define NO_KEY_PRESSED 0xFF
-
-#define FAN_SPEED_AUTO 0
-#define FAN_SPEED_LOW 1
-#define FAN_SPEED_MIDDLE 2
-#define FAN_SPEED_HIGH 3
 
 typedef struct {
     unsigned char reloadPeriod; // time length of interrupt period
@@ -36,8 +33,6 @@ Task_t TaskData[NUM_OF_TASK] = {
     { 208, 208, 0 }  // 998.4ms for temperature read and display
     // clang-format on
 };
-
-static unsigned char FanSpeedMode = FAN_SPEED_AUTO; // fan speed mode automatic
 
 void TimeInterruptWork(void)
 {
@@ -71,7 +66,7 @@ void TaskRunClear(unsigned char taskNum)
     }
 }
 
-void GetDisplayTempTask(void)
+void TemperatureTask(void)
 {
     if (TaskCanRun(TEMPERATURE_TASK)) {
         static unsigned char flip = 2;
@@ -80,7 +75,7 @@ void GetDisplayTempTask(void)
         flip--;
         if (flip != 0) {
             if (!DS18B20ConvertTemp()) {
-                flip = 2; // convert faild reload counter
+                flip = 2; // convert failed reload counter
             }
         } else {
             flip = 2;
@@ -113,44 +108,6 @@ void BlinkPD3LedTask(void)
         GPIO_WriteReverse(GPIOD, GPIO_PIN_3);
         TaskRunClear(LED_TASK);
     }
-}
-
-void DisplayTemperature(unsigned char temperature)
-{
-    TM1638OneSymbolDisplay(1, temperature / 10);
-    TM1638OneSymbolDisplay(0, temperature % 10);
-}
-
-void DisplayFanSpeed(void)
-{
-    TM1638OneSymbolDisplay(2, FanSpeedMode);
-}
-
-static void IncreaseTemperatureSetpoint(char step)
-{
-    WriteTemperatureSetpoint(ReadTemperatureSetpoint() + step);
-    DisplayTemperature(ReadTemperatureSetpoint());
-}
-
-static void ChangeFanMode(void)
-{
-    switch (FanSpeedMode) {
-    case FAN_SPEED_AUTO:
-        FanSpeedMode = FAN_SPEED_LOW;
-        break;
-    case FAN_SPEED_LOW:
-        FanSpeedMode = FAN_SPEED_MIDDLE;
-        break;
-    case FAN_SPEED_MIDDLE:
-        FanSpeedMode = FAN_SPEED_HIGH;
-        break;
-    case FAN_SPEED_HIGH:
-        FanSpeedMode = FAN_SPEED_AUTO;
-        break;
-    default:
-        break;
-    }
-    DisplayFanSpeed();
 }
 
 void ReadKeyboardTask(void)
