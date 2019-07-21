@@ -479,11 +479,16 @@ Next=Root.Source Files...\tm1638\tm1638.c
 [Root.Source Files...\tm1638\tm1638.c]
 ElemType=File
 PathName=..\tm1638\tm1638.c
-Next=Root.Source Files.helper.c
+Next=Root.Source Files.control.c
 
-[Root.Source Files.helper.c]
+[Root.Source Files.control.c]
 ElemType=File
-PathName=helper.c
+PathName=control.c
+Next=Root.Source Files.display.c
+
+[Root.Source Files.display.c]
+ElemType=File
+PathName=display.c
 Next=Root.Source Files.main.c
 
 [Root.Source Files.main.c]
@@ -504,6 +509,11 @@ Next=Root.Source Files.stm8s_it.c
 [Root.Source Files.stm8s_it.c]
 ElemType=File
 PathName=stm8s_it.c
+Next=Root.Source Files.task.c
+
+[Root.Source Files.task.c]
+ElemType=File
+PathName=task.c
 
 [Root.Include Files]
 ElemType=Folder

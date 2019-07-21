@@ -6,7 +6,6 @@
 #include "../core/atomic.h"
 #include "Control.h"
 #include "Display.h"
-#include "param.h"
 
 #define NUM_OF_TASK 8
 #define KEYBOARD_TASK 1

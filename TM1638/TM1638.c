@@ -182,20 +182,7 @@ void TM1638Init(void)
     // init displ data
     unsigned char displayData[] = { 0, 0, 40, 40, 40, 40, 40, 40 };
     // init IO state
-    //    SET_BIT8(TM1638_PORT->DDR, DIO_PIN); // PA1-4 set to output
-    //    SET_BIT8(TM1638_PORT->DDR, CLK_PIN); // PA1-4 set to output
-    //    SET_BIT8(TM1638_PORT->DDR, STB_PIN); // PA1-4 set to output
-    //
-    //    SET_BIT8(TM1638_PORT->CR1, DIO_PIN); //  push-pull/pull up
-    //    SET_BIT8(TM1638_PORT->CR1, CLK_PIN); //  push-pull/pull up
-    //    SET_BIT8(TM1638_PORT->CR1, STB_PIN); //  push-pull/pull up
-    //
-    //    CLEAR_BIT8(TM1638_PORT->CR2, DIO_PIN); //  push-pull/pull up
-    //    CLEAR_BIT8(TM1638_PORT->CR2, CLK_PIN); //  push-pull/pull up
-    //    CLEAR_BIT8(TM1638_PORT->CR2, STB_PIN); //  push-pull/pull up
-
     GPIO_Init(TM1638_PORT, (GPIO_Pin_TypeDef)DIO_PIN | CLK_PIN | STB_PIN, GPIO_MODE_OUT_PP_HIGH_SLOW); // PA1-4 set to output
-
     TM1638EightSymbolDisplay(displayData);
 }
 

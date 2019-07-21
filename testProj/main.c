@@ -18,6 +18,7 @@
 void main(void)
 {
     GPIO_Init(GPIOD, (GPIO_Pin_TypeDef)(GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
+    GPIO_Init(GPIOB, (GPIO_Pin_TypeDef)(GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
     // HSI selected as master clock source (reset value),16 MHz
     // fHSI= fHSI RC output/2 = 8MHz, Warning: not like this!!!
     CLK_DeInit();
