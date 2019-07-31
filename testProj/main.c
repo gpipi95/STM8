@@ -17,8 +17,8 @@
 
 void main(void)
 {
+    // 初始化Led呼吸灯
     GPIO_Init(GPIOD, (GPIO_Pin_TypeDef)(GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
-    GPIO_Init(GPIOB, (GPIO_Pin_TypeDef)(GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3), GPIO_MODE_OUT_PP_LOW_SLOW);
     // HSI selected as master clock source (reset value),16 MHz
     // fHSI= fHSI RC output/2 = 8MHz, Warning: not like this!!!
     CLK_DeInit();
@@ -30,6 +30,7 @@ void main(void)
     TM1638Init();
     Printf_Init();
     _asm("rim"); //打开总中断
+    InitFanControl();
     DisplayTemperatureSetpoint(ReadTemperatureSetpoint());
     DisplayFanSpeedMode(GetFanSpeedMode());
     while (1) {

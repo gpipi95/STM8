@@ -6,6 +6,7 @@
 #include "../core/atomic.h"
 #include "Control.h"
 #include "Display.h"
+#include "param.h"
 
 #define NUM_OF_TASK 8
 #define KEYBOARD_TASK 1
@@ -68,33 +69,19 @@ void TaskRunClear(unsigned char taskNum)
 void TemperatureTask(void)
 {
     if (TaskCanRun(TEMPERATURE_TASK)) {
-        static unsigned char flip = 2;
+        static unsigned char convertSuccess = 0;
         short int            temperature;
-        unsigned char        temp;
-        flip--;
-        if (flip != 0) {
-            if (!DS18B20ConvertTemp()) {
-                flip = 2; // convert failed reload counter
+        if (!convertSuccess) {
+            if (DS18B20ConvertTemp()) {
+                convertSuccess = 1; // convert success, next cycle we can read temperature
             }
         } else {
-            flip = 2;
+            convertSuccess = 0;
             if (DS18B20GetTemp(&temperature)) {
-                if (temperature < 0) {
-                    temp = 38; // display minus flag
-                } else if (CAST_UC((temperature / 1000) % 10) == 0) {
-                    temp = 40; // turn off led
-                } else {
-                    temp = CAST_UC((temperature / 1000) % 10);
+                DisplayRealTemperature(temperature);
+                if (ControlFanSpeed(temperature)) {
+                    DisplayFanValveState(GetFanSpeedState(), GetValveState());
                 }
-                TM1638OneSymbolDisplay(7, temp);
-                if (temp == 40) {
-                    if (CAST_UC((temperature / 100) % 10) != 0) {
-                        temp = CAST_UC((temperature / 100) % 10);
-                    }
-                }
-                TM1638OneSymbolDisplay(6, temp);
-                TM1638OneSymbolDisplay(5, CAST_UC((temperature / 10) % 10) + 16);
-                TM1638OneSymbolDisplay(4, CAST_UC(temperature % 10));
             }
         }
         TaskRunClear(TEMPERATURE_TASK);
@@ -133,12 +120,22 @@ void ReadKeyboardTask(void)
                 switch (lastKey) {
                 case 0x01:
                     IncreaseTemperatureSetpoint(1);
+                    DisplayTemperatureSetpoint(ReadTemperatureSetpoint());
                     break;
                 case 0x05:
                     IncreaseTemperatureSetpoint(-1);
+                    DisplayTemperatureSetpoint(ReadTemperatureSetpoint());
                     break;
                 case 0x02:
                     ChangeFanMode();
+                    DisplayFanSpeedMode(GetFanSpeedMode());
+                    if (GetFanSpeedMode() != FAN_SPEED_AUTO_MODE) {
+                        DisplayFanValveState(GetFanSpeedState(), GetValveState());
+                    }
+                    break;
+                case 0x06:
+                    ChangeValveOutput(!GetValveState());
+                    DisplayFanValveState(GetFanSpeedState(), GetValveState());
                     break;
                 default:
                     break;
