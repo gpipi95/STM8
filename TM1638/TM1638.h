@@ -4,7 +4,7 @@
 #include "../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"
 #include "../core/utility.h"
 
-#define TM1638_PORT GPIOA
+#define TM1638_PORT GPIOC
 
 #define DIO_PIN GPIO_PIN_1
 #define CLK_PIN GPIO_PIN_2
